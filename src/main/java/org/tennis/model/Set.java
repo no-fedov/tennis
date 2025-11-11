@@ -8,6 +8,8 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
+import static org.tennis.model.Participant.FIRST;
+import static org.tennis.model.Participant.SECOND;
 import static org.tennis.model.util.MatchProgressChecker.isFinish;
 
 @Getter
@@ -17,17 +19,17 @@ public class Set {
     private static final int GAME_COUNT_FOR_WIN = 6;
     private static final int GAP_BY_GAME_FOR_WIN = 2;
 
-    boolean isComplete;
-    Integer winner;
+    private boolean isComplete;
+    private Participant winner;
     private TieBreak tieBreak;
     private final List<Game> games = new LinkedList<>();
 
-    public void play(int playerNumber) {
+    public void play(Participant winner) {
         if (isComplete) {
             return;
         }
         if (tieBreak != null) {
-            pointTieBreak(playerNumber);
+            pointTieBreak(winner);
             return;
         }
         Game lastGame = getLastOrInitGame();
@@ -35,12 +37,12 @@ public class Set {
             if (tieBreak == null) {
                 tieBreak = new TieBreak();
             }
-            pointTieBreak(playerNumber);
+            pointTieBreak(winner);
             return;
         }
-        lastGame.point(playerNumber);
+        lastGame.point(winner);
         if (thisComplete()) {
-            winner = playerNumber;
+            this.winner = winner;
             isComplete = true;
         }
     }
@@ -54,18 +56,18 @@ public class Set {
     }
 
     private boolean thisComplete() {
-        Map<Integer, Long> scores = games.stream()
+        Map<Participant, Long> scores = games.stream()
                 .filter(game -> game.getWinner() != null)
                 .collect(groupingBy(Game::getWinner, counting()));
-        int firstScore = scores.get(1).intValue();
-        int secondScore = scores.get(2).intValue();
+        int firstScore = scores.get(FIRST).intValue();
+        int secondScore = scores.get(SECOND).intValue();
         return isFinish(firstScore, secondScore, GAME_COUNT_FOR_WIN, GAP_BY_GAME_FOR_WIN);
     }
 
-    private void pointTieBreak(int playerNumber) {
+    private void pointTieBreak(Participant winner) {
         if (tieBreak.isComplete()) {
             return;
         }
-        tieBreak.point(playerNumber);
+        tieBreak.point(winner);
     }
 }

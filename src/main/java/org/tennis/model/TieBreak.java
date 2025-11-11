@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.tennis.model.Participant.FIRST;
 import static org.tennis.model.util.MatchProgressChecker.isFinish;
 
 @Getter
@@ -18,38 +19,42 @@ public class TieBreak {
     private static final int SCORE_FOR_WIN = 7;
 
     private boolean isComplete;
-    private Integer winner;
-    private final List<TieBreakPoint> tieBreakPoints = new LinkedList<>();
+    private Participant winner;
+    private final List<TieBreakPoint> points = new LinkedList<>();
 
-    public void point(int playerNumber) {
+    public void point(Participant winner) {
         if (isComplete) {
             return;
         }
-        if (tieBreakPoints.isEmpty()) {
-            tieBreakPoints.add(new TieBreakPoint(START_SCORE, START_SCORE));
+        if (points.isEmpty()) {
+            switch (winner) {
+                case FIRST -> points.add(new TieBreakPoint(START_SCORE + SHIFT_POINT, START_SCORE));
+                case SECOND -> points.add(new TieBreakPoint(START_SCORE, START_SCORE + SHIFT_POINT));
+            }
+            return;
         }
-        TieBreakPoint lastPoint = tieBreakPoints.getLast();
-        TieBreakPoint currentPoint = lastPoint.next(playerNumber);
-        tieBreakPoints.add(currentPoint);
+        TieBreakPoint lastPoint = points.getLast();
+        TieBreakPoint currentPoint = lastPoint.next(winner);
+        points.add(currentPoint);
         if (isLastPoint(currentPoint)) {
             isComplete = true;
-            winner = playerNumber;
+            this.winner = winner;
         }
     }
 
     private boolean isLastPoint(TieBreakPoint point) {
-        return isFinish(point.firstPlayerScore, point.secondPlayerScore, SCORE_FOR_WIN, POINTS_GAP_FOR_WIN) ;
+        return isFinish(point.firstScore, point.secondScore, SCORE_FOR_WIN, POINTS_GAP_FOR_WIN);
     }
 
     @RequiredArgsConstructor
-    final class TieBreakPoint {
-        private final int firstPlayerScore;
-        private final int secondPlayerScore;
+    static final class TieBreakPoint {
+        private final int firstScore;
+        private final int secondScore;
 
-        TieBreakPoint next(int playerNumber) {
-            return playerNumber == 1
-                    ? new TieBreakPoint(firstPlayerScore + SHIFT_POINT, secondPlayerScore)
-                    : new TieBreakPoint(firstPlayerScore, secondPlayerScore + SHIFT_POINT);
+        TieBreakPoint next(Participant winner) {
+            return winner == FIRST
+                    ? new TieBreakPoint(firstScore + SHIFT_POINT, secondScore)
+                    : new TieBreakPoint(firstScore, secondScore + SHIFT_POINT);
         }
     }
 }

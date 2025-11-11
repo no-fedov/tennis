@@ -1,31 +1,42 @@
 package org.tennis.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+
+import static org.tennis.model.Participant.FIRST;
+import static org.tennis.model.Participant.SECOND;
 
 @Getter
 public class Game {
 
-    private Integer winner;
+    private Participant winner;
     private boolean isComplete;
     private final List<Point> points = new LinkedList<>();
 
-    public void point(int playerNumber) {
+    public void point(Participant winner) {
         if (isComplete) {
             return;
         }
         if (points.isEmpty()) {
-            switch (playerNumber) {
-                case 1 -> points.add(new Point(ScorePoint.FIFTEEN, ScorePoint.ZERO));
-                case 2 -> points.add(new Point(ScorePoint.ZERO, ScorePoint.FIFTEEN));
+            switch (winner) {
+                case FIRST -> points.add(new Point(ScorePoint.FIFTEEN, ScorePoint.ZERO));
+                case SECOND -> points.add(new Point(ScorePoint.ZERO, ScorePoint.FIFTEEN));
             }
             return;
         }
         Point previousPoint = points.getLast();
-        points.add(previousPoint.nextPoint(playerNumber));
+        Point nextPoint = previousPoint.nextPoint(winner);
+        if (Objects.equals(previousPoint, nextPoint)) {
+            isComplete = true;
+            this.winner = winner;
+        } else {
+            points.add(nextPoint);
+        }
     }
 
     @RequiredArgsConstructor
@@ -48,34 +59,33 @@ public class Game {
         }
     }
 
+    @EqualsAndHashCode
     @RequiredArgsConstructor
-    class Point {
+    static class Point {
 
-        private final ScorePoint firstPlayerScore;
-        private final ScorePoint secondPlayerScore;
+        private final ScorePoint firstScore;
+        private final ScorePoint secondScore;
 
-        private Point nextPoint(int playerNumberPointWinner) {
-            if ((playerNumberPointWinner == 1 && isLastPoint(firstPlayerScore, secondPlayerScore))
-                    || (playerNumberPointWinner == 2 && isLastPoint(secondPlayerScore, firstPlayerScore))) {
-                isComplete = true;
-                winner = playerNumberPointWinner;
-                return this;
+        private Point nextPoint(Participant winner) {
+            if ((winner == FIRST && isLastPoint(firstScore, secondScore))
+                    || (winner == SECOND && isLastPoint(secondScore, firstScore))) {
+                return new Point(firstScore, secondScore);
             }
-            if (playerNumberPointWinner == 1) {
-                return secondPlayerScore == ScorePoint.ADVANTAGE
-                        ? new Point(firstPlayerScore, secondPlayerScore.next())
-                        : new Point(firstPlayerScore.next(), secondPlayerScore);
+            if (winner == FIRST) {
+                return secondScore == ScorePoint.ADVANTAGE
+                        ? new Point(firstScore, secondScore.next())
+                        : new Point(firstScore.next(), secondScore);
             } else {
-                return firstPlayerScore == ScorePoint.ADVANTAGE
-                        ? new Point(firstPlayerScore.next(), secondPlayerScore)
-                        : new Point(firstPlayerScore, secondPlayerScore.next());
+                return firstScore == ScorePoint.ADVANTAGE
+                        ? new Point(firstScore.next(), secondScore)
+                        : new Point(firstScore, secondScore.next());
             }
         }
 
-        private boolean isLastPoint(ScorePoint previousPointWinner, ScorePoint opponentPoint) {
-            return switch (previousPointWinner) {
-                case FORTY -> opponentPoint != ScorePoint.FORTY && opponentPoint != ScorePoint.ADVANTAGE;
-                case ADVANTAGE -> opponentPoint == ScorePoint.FORTY;
+        private boolean isLastPoint(ScorePoint firstScore, ScorePoint secondScore) {
+            return switch (firstScore) {
+                case FORTY -> secondScore != ScorePoint.FORTY && secondScore != ScorePoint.ADVANTAGE;
+                case ADVANTAGE -> secondScore == ScorePoint.FORTY;
                 default -> false;
             };
         }
