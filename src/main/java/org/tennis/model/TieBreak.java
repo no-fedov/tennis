@@ -46,11 +46,7 @@ public class TieBreak {
         return isFinish(point.firstScore, point.secondScore, SCORE_FOR_WIN, POINTS_GAP_FOR_WIN);
     }
 
-    @RequiredArgsConstructor
-    static final class TieBreakPoint {
-        private final int firstScore;
-        private final int secondScore;
-
+    public record TieBreakPoint(int firstScore, int secondScore) {
         TieBreakPoint next(Participant winner) {
             return winner == FIRST
                     ? new TieBreakPoint(firstScore + SHIFT_POINT, secondScore)

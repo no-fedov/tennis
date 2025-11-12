@@ -31,14 +31,14 @@ public class GameTest {
 
         Game.Point resultPoint = game.getPoints().getLast();
 
-        assertEquals(resultPoint, expectedPoint);
-        assertEquals(game.getWinner(), FIRST);
+        assertEquals(expectedPoint, resultPoint);
+        assertEquals(FIRST, game.getWinner());
         assertTrue(game.isComplete());
     }
 
     @Test
     @DisplayName("Игра не звершилась при счете \"40-40\" и засчитанном поинте")
-    public void successGameIsNotComplete() {
+    public void gameIsNotComplete() {
         Game game = new Game();
 
         winPoints(FIRST, game, TREE_STREAK_COUNT);
