@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.tennis.GamePointUtil.pointsByPlayer;
+import static org.tennis.WinStreakSeries.TREE_STREAK_COUNT;
+import static org.tennis.WinStreakSeries.TWO_STREAK_COUNT;
+import static org.tennis.model.Game.ScorePoint.ADVANTAGE;
+import static org.tennis.model.Game.ScorePoint.FORTY;
 import static org.tennis.model.Participant.FIRST;
 import static org.tennis.model.Participant.SECOND;
 
@@ -19,28 +22,36 @@ public class GameTest {
     @DisplayName("Завершения гейма при счете \"A-40\" при засчитанном поинте")
     public void successCompleteGame() {
         Game game = new Game();
-        Participant winner = FIRST;
-        Participant looser = SECOND;
 
-        pointsByPlayer(winner, game, 3);
-        pointsByPlayer(looser, game, 3);
-        pointsByPlayer(winner, game, 2);
+        Game.Point expectedPoint = new Game.Point(ADVANTAGE, FORTY);
 
-        assertEquals(winner, FIRST);
+        winPoints(FIRST, game, TREE_STREAK_COUNT);
+        winPoints(SECOND, game, TREE_STREAK_COUNT);
+        winPoints(FIRST, game, TWO_STREAK_COUNT);
+
+        Game.Point resultPoint = game.getPoints().getLast();
+
+        assertEquals(resultPoint, expectedPoint);
+        assertEquals(game.getWinner(), FIRST);
         assertTrue(game.isComplete());
     }
 
     @Test
-    @DisplayName("Игра не звершилась при счете\"40-40\" и засчитанном поинте")
+    @DisplayName("Игра не звершилась при счете \"40-40\" и засчитанном поинте")
     public void successGameIsNotComplete() {
         Game game = new Game();
-        Participant firstPlayer = FIRST;
-        Participant secondPlayer = SECOND;
 
-        pointsByPlayer(firstPlayer, game, 3);
-        pointsByPlayer(secondPlayer, game, 3);
-        game.point(secondPlayer);
+        winPoints(FIRST, game, TREE_STREAK_COUNT);
+        winPoints(SECOND, game, TREE_STREAK_COUNT);
+        game.point(FIRST);
+
         assertNull(game.getWinner());
         assertFalse(game.isComplete());
+    }
+
+    private void winPoints(Participant participant, Game game, WinStreakSeries winStreakSeries) {
+        for (int i = 1; i <= winStreakSeries.getSize(); i++) {
+            game.point(participant);
+        }
     }
 }
