@@ -15,7 +15,7 @@ import static org.tennis.model.util.MatchProgressChecker.isFinish;
 @Getter
 public class Set {
 
-    private static final int TOTAL_COUNT_GAME = 12;
+    private static final int MAX_COUNT_GAME = 12;
     private static final int GAME_COUNT_FOR_WIN = 6;
     private static final int GAP_BY_GAME_FOR_WIN = 2;
     private static final int ZERO_WIN_GAME = 0;
@@ -44,7 +44,7 @@ public class Set {
             isComplete = true;
             return;
         }
-        if (lastGame.isComplete() && games.size() == TOTAL_COUNT_GAME) {
+        if (lastGame.isComplete() && games.size() == MAX_COUNT_GAME) {
             // TODO: инвертировать зависимость
             tieBreak = new TieBreak();
             pointTieBreak(winner);
