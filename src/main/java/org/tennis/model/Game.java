@@ -1,6 +1,5 @@
 package org.tennis.model;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -39,8 +38,12 @@ public class Game {
         }
     }
 
+    public List<Point> getPoints() {
+        return new LinkedList<>(points);
+    }
+
     @RequiredArgsConstructor
-    enum ScorePoint {
+    public enum ScorePoint {
         ZERO("0"),
         FIFTEEN("15"),
         THIRTY("30"),
@@ -59,12 +62,7 @@ public class Game {
         }
     }
 
-    @EqualsAndHashCode
-    @RequiredArgsConstructor
-    static class Point {
-
-        private final ScorePoint firstScore;
-        private final ScorePoint secondScore;
+    public record Point(ScorePoint firstScore, ScorePoint secondScore) {
 
         private Point nextPoint(Participant winner) {
             if ((winner == FIRST && isLastPoint(firstScore, secondScore))
