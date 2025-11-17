@@ -1,4 +1,4 @@
-package org.tennis.model;
+package org.tennis.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.tennis.model.Participant.FIRST;
-import static org.tennis.model.Participant.SECOND;
+import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.Participant.SECOND;
 
 @Getter
 public class Game {

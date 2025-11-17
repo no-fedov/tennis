@@ -1,16 +1,15 @@
 package org.tennis;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.tennis.model.Participant;
-import org.tennis.model.TieBreak;
+import org.tennis.domain.Participant;
+import org.tennis.domain.TieBreak;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.tennis.WinStreakSeries.SEVEN_STREAK_COUNT;
-import static org.tennis.model.Participant.FIRST;
+import static org.tennis.domain.Participant.FIRST;
 
 public class TieBreakTest {
 

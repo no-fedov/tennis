@@ -1,4 +1,4 @@
-package org.tennis.model;
+package org.tennis.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.tennis.model.Participant.FIRST;
-import static org.tennis.model.util.MatchProgressChecker.isFinish;
+import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.util.MatchProgressChecker.isFinish;
 
 @Getter
 @RequiredArgsConstructor

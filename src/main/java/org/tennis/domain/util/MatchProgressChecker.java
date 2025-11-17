@@ -1,4 +1,4 @@
-package org.tennis.model.util;
+package org.tennis.domain.util;
 
 public class MatchProgressChecker {
 

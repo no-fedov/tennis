@@ -2,8 +2,8 @@ package org.tennis;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.tennis.model.Game;
-import org.tennis.model.Participant;
+import org.tennis.domain.Game;
+import org.tennis.domain.Participant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.tennis.WinStreakSeries.TREE_STREAK_COUNT;
 import static org.tennis.WinStreakSeries.TWO_STREAK_COUNT;
-import static org.tennis.model.Game.ScorePoint.ADVANTAGE;
-import static org.tennis.model.Game.ScorePoint.FORTY;
-import static org.tennis.model.Participant.FIRST;
-import static org.tennis.model.Participant.SECOND;
+import static org.tennis.domain.Game.ScorePoint.ADVANTAGE;
+import static org.tennis.domain.Game.ScorePoint.FORTY;
+import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.Participant.SECOND;
 
 public class GameTest {
 

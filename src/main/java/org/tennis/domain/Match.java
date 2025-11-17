@@ -1,4 +1,4 @@
-package org.tennis.model;
+package org.tennis.domain;
 
 import lombok.Getter;
 

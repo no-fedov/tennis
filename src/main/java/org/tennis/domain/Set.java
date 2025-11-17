@@ -1,4 +1,4 @@
-package org.tennis.model;
+package org.tennis.domain;
 
 import lombok.Getter;
 
@@ -8,9 +8,9 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
-import static org.tennis.model.Participant.FIRST;
-import static org.tennis.model.Participant.SECOND;
-import static org.tennis.model.util.MatchProgressChecker.isFinish;
+import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.Participant.SECOND;
+import static org.tennis.domain.util.MatchProgressChecker.isFinish;
 
 @Getter
 public class Set {

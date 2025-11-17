@@ -1,8 +1,8 @@
 package org.tennis;
 
 import org.junit.jupiter.api.Test;
-import org.tennis.model.Participant;
-import org.tennis.model.Set;
+import org.tennis.domain.Participant;
+import org.tennis.domain.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,8 +12,8 @@ import static org.tennis.WinStreakSeries.FIVE_STREAK_COUNT;
 import static org.tennis.WinStreakSeries.FOUR_STREAK_COUNT;
 import static org.tennis.WinStreakSeries.ONE_STREAK_COUNT;
 import static org.tennis.WinStreakSeries.SIX_STREAK_COUNT;
-import static org.tennis.model.Participant.FIRST;
-import static org.tennis.model.Participant.SECOND;
+import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.Participant.SECOND;
 
 public class SetTest {
 
