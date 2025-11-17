@@ -22,23 +22,23 @@ public class TieBreak {
     private Participant winner;
     private final List<TieBreakPoint> points = new LinkedList<>();
 
-    public void point(Participant winner) {
+    public void point(Participant pointWinner) {
         if (isComplete) {
             return;
         }
         if (points.isEmpty()) {
-            switch (winner) {
+            switch (pointWinner) {
                 case FIRST -> points.add(new TieBreakPoint(START_SCORE + SHIFT_POINT, START_SCORE));
                 case SECOND -> points.add(new TieBreakPoint(START_SCORE, START_SCORE + SHIFT_POINT));
             }
             return;
         }
         TieBreakPoint lastPoint = points.getLast();
-        TieBreakPoint currentPoint = lastPoint.next(winner);
+        TieBreakPoint currentPoint = lastPoint.next(pointWinner);
         points.add(currentPoint);
         if (isLastPoint(currentPoint)) {
             isComplete = true;
-            this.winner = winner;
+            this.winner = pointWinner;
         }
     }
 

@@ -17,22 +17,22 @@ public class Game {
     private boolean isComplete;
     private final List<Point> points = new LinkedList<>();
 
-    public void point(Participant winner) {
+    public void point(Participant pointWinner) {
         if (isComplete) {
             return;
         }
         if (points.isEmpty()) {
-            switch (winner) {
+            switch (pointWinner) {
                 case FIRST -> points.add(new Point(ScorePoint.FIFTEEN, ScorePoint.ZERO));
                 case SECOND -> points.add(new Point(ScorePoint.ZERO, ScorePoint.FIFTEEN));
             }
             return;
         }
         Point previousPoint = points.getLast();
-        Point nextPoint = previousPoint.nextPoint(winner);
+        Point nextPoint = previousPoint.nextPoint(pointWinner);
         if (Objects.equals(previousPoint, nextPoint)) {
             isComplete = true;
-            this.winner = winner;
+            this.winner = pointWinner;
         } else {
             points.add(nextPoint);
         }
@@ -64,12 +64,12 @@ public class Game {
 
     public record Point(ScorePoint firstScore, ScorePoint secondScore) {
 
-        private Point nextPoint(Participant winner) {
-            if ((winner == FIRST && isLastPoint(firstScore, secondScore))
-                    || (winner == SECOND && isLastPoint(secondScore, firstScore))) {
+        private Point nextPoint(Participant pointWinner) {
+            if ((pointWinner == FIRST && isLastPoint(firstScore, secondScore))
+                    || (pointWinner == SECOND && isLastPoint(secondScore, firstScore))) {
                 return new Point(firstScore, secondScore);
             }
-            if (winner == FIRST) {
+            if (pointWinner == FIRST) {
                 return secondScore == ScorePoint.ADVANTAGE
                         ? new Point(firstScore, secondScore.next())
                         : new Point(firstScore.next(), secondScore);

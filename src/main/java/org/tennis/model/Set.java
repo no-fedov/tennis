@@ -25,12 +25,12 @@ public class Set {
     private TieBreak tieBreak;
     private final List<Game> games = new LinkedList<>();
 
-    public void play(Participant winner) {
+    public void play(Participant pointWinner) {
         if (isComplete) {
             return;
         }
         if (tieBreak != null) {
-            pointTieBreak(winner);
+            pointTieBreak(pointWinner);
             return;
         }
         if (games.isEmpty()) {
@@ -38,16 +38,16 @@ public class Set {
             games.add(new Game());
         }
         Game lastGame = games.getLast();
-        lastGame.point(winner);
+        lastGame.point(pointWinner);
         if (thisComplete()) {
-            this.winner = winner;
+            this.winner = pointWinner;
             isComplete = true;
             return;
         }
         if (lastGame.isComplete() && games.size() == MAX_COUNT_GAME) {
             // TODO: инвертировать зависимость
             tieBreak = new TieBreak();
-            pointTieBreak(winner);
+            pointTieBreak(pointWinner);
             return;
         }
         if (lastGame.isComplete()) {
