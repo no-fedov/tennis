@@ -23,14 +23,12 @@ public class Match {
             sets.add(new Set());
         }
         Set lastSet = sets.getLast();
-        lastSet.play(winner);
-
+        lastSet.play(pointWinner);
         if (isLastPoint(pointWinner)) {
             this.winner = pointWinner;
             isComplete = true;
             return;
         }
-
         if (lastSet.isComplete()) {
             sets.add(new Set());
         }

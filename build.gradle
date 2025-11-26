@@ -10,9 +10,12 @@ repositories {
 }
 
 dependencies {
+
+    implementation 'com.h2database:h2:1.4.199'
+    implementation 'org.hibernate.orm:hibernate-core:7.1.8.Final'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-
 
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")
@@ -20,6 +23,10 @@ dependencies {
     testCompileOnly("org.projectlombok:lombok:1.18.42")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 
+
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    implementation 'ch.qos.logback:logback-classic:1.5.21'
 }
 
 test {

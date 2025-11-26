@@ -3,6 +3,7 @@ target/
 !**/src/test/**/target/
 .gradle
 gradle
+.smarttomcat
 
 ### STS ###
 .apt_generated
