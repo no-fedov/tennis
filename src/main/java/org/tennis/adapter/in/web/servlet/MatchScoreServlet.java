@@ -6,28 +6,35 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.tennis.application.dto.MatchScoreDto;
+import org.tennis.application.model.OngoingMatch;
+import org.tennis.application.service.MatchScoreCalculationService;
 import org.tennis.application.service.OngoingMatchesService;
-import org.tennis.domain.Participant;
+import org.tennis.domain.game.Participant;
 
 import java.io.IOException;
 
-import static org.tennis.domain.Participant.FIRST;
-import static org.tennis.domain.Participant.SECOND;
+import static org.tennis.domain.game.Participant.FIRST;
+import static org.tennis.domain.game.Participant.SECOND;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
 
     private OngoingMatchesService ongoingMatchesService;
+    private MatchScoreCalculationService matchScoreCalculationService;
 
     @Override
     public void init() throws ServletException {
         this.ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
+        this.matchScoreCalculationService = (MatchScoreCalculationService) getServletContext().getAttribute("matchScoreCalculationService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String matchId = req.getParameter("uuid");
-        ongoingMatchesService.get(matchId).orElseThrow(() -> new IllegalStateException());
+        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId).orElseThrow(() -> new IllegalStateException());
+        MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
+        req.setAttribute("match_score", matchScoreDto);
         forwardToScoreView(req, resp);
     }
 
@@ -36,10 +43,10 @@ public class MatchScoreServlet extends HttpServlet {
         String matchId = req.getParameter("uuid");
         String pointWinner = req.getParameter("point_winner");
         Participant pointWinnerParticipant = getParticipant(pointWinner);
-        ongoingMatchesService.get(matchId).ifPresentOrElse(match -> match.play(pointWinnerParticipant),
-                () -> {
-                    throw new IllegalStateException();
-                });
+        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId).orElseThrow(() -> new IllegalStateException());
+        ongoingMatch.play(pointWinnerParticipant);
+        MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
+        req.setAttribute("match_score", matchScoreDto);
         forwardToScoreView(req, resp);
     }
 

@@ -1,4 +1,4 @@
-package org.tennis.domain;
+package org.tennis.domain.game;
 
 public enum Participant {
 

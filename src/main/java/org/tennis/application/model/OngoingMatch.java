@@ -1,7 +1,7 @@
 package org.tennis.application.model;
 
-import org.tennis.domain.Match;
-import org.tennis.domain.Participant;
+import org.tennis.domain.game.Match;
+import org.tennis.domain.game.Participant;
 
 public record OngoingMatch(String firstPlayerName, String secondPlayerName, Match match) {
 

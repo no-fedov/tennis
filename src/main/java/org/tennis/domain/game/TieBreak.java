@@ -1,12 +1,14 @@
-package org.tennis.domain;
+package org.tennis.domain.game;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.game.Participant.FIRST;
 import static org.tennis.domain.util.MatchProgressChecker.isFinish;
 
 @Getter
@@ -20,6 +22,7 @@ public class TieBreak {
 
     private boolean isComplete;
     private Participant winner;
+    @Getter(AccessLevel.NONE)
     private final List<TieBreakPoint> points = new LinkedList<>();
 
     public void point(Participant pointWinner) {
@@ -40,6 +43,13 @@ public class TieBreak {
             isComplete = true;
             this.winner = pointWinner;
         }
+    }
+
+    public Optional<TieBreakPoint> getLastPoint() {
+        if (points.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(points.getLast());
     }
 
     private boolean isLastPoint(TieBreakPoint point) {

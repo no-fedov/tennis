@@ -15,6 +15,6 @@ public enum WinStreakSeries {
     SIX_STREAK_COUNT(6),
     SEVEN_STREAK_COUNT(7);
 
-    private final int size;
+    private final int count;
 }
 

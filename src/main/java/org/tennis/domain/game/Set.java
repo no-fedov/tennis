@@ -1,15 +1,17 @@
-package org.tennis.domain;
+package org.tennis.domain.game;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
-import static org.tennis.domain.Participant.FIRST;
-import static org.tennis.domain.Participant.SECOND;
+import static org.tennis.domain.game.Participant.FIRST;
+import static org.tennis.domain.game.Participant.SECOND;
 import static org.tennis.domain.util.MatchProgressChecker.isFinish;
 
 @Getter
@@ -22,8 +24,10 @@ public class Set {
 
     private boolean isComplete;
     private Participant winner;
+    @Getter(AccessLevel.NONE)
     private TieBreak tieBreak;
-    private final List<Game> games = new LinkedList<>();
+    @Getter(AccessLevel.NONE)
+    protected final List<Game> games = new LinkedList<>();
 
     public void play(Participant pointWinner) {
         if (isComplete) {
@@ -54,6 +58,17 @@ public class Set {
             // TODO: инвертировать зависимость
             games.add(new Game());
         }
+    }
+
+    public Optional<Game> getLastGame() {
+        if (games.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(games.getLast());
+    }
+
+    public Optional<TieBreak> getTieBreak() {
+        return Optional.ofNullable(this.tieBreak);
     }
 
     private boolean thisComplete() {

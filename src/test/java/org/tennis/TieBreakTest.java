@@ -1,15 +1,13 @@
 package org.tennis;
 
 import org.junit.jupiter.api.Test;
-import org.tennis.domain.Participant;
-import org.tennis.domain.TieBreak;
-
-import java.util.List;
+import org.tennis.domain.game.Participant;
+import org.tennis.domain.game.TieBreak;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.tennis.WinStreakSeries.SEVEN_STREAK_COUNT;
-import static org.tennis.domain.Participant.FIRST;
+import static org.tennis.domain.game.Participant.FIRST;
 
 public class TieBreakTest {
 
@@ -18,7 +16,7 @@ public class TieBreakTest {
         TieBreak tieBreak = new TieBreak();
 
         tieBreak.point(FIRST);
-        TieBreak.TieBreakPoint point = tieBreak.getPoints().getLast();
+        TieBreak.TieBreakPoint point = tieBreak.getLastPoint().orElseThrow();
         int firstScore = point.firstScore();
         int secondScore = point.secondScore();
 
@@ -31,15 +29,15 @@ public class TieBreakTest {
         TieBreak tieBreak = new TieBreak();
 
         winStreakPoints(FIRST, tieBreak, SEVEN_STREAK_COUNT);
-        List<TieBreak.TieBreakPoint> points = tieBreak.getPoints();
+        TieBreak.TieBreakPoint point = tieBreak.getLastPoint().orElseThrow();
 
         assertTrue(tieBreak.isComplete());
         assertEquals(FIRST, tieBreak.getWinner());
-        assertEquals(points.size(), SEVEN_STREAK_COUNT.getSize());
+        assertEquals(SEVEN_STREAK_COUNT.getCount(), point.firstScore());
     }
 
     private void winStreakPoints(Participant participant, TieBreak tieBreak, WinStreakSeries winStreakSeries) {
-        for (int i = 1; i <= winStreakSeries.getSize(); i++) {
+        for (int i = 1; i <= winStreakSeries.getCount(); i++) {
             tieBreak.point(participant);
         }
     }

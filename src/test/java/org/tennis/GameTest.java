@@ -2,8 +2,8 @@ package org.tennis;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.tennis.domain.Game;
-import org.tennis.domain.Participant;
+import org.tennis.domain.game.Game;
+import org.tennis.domain.game.Participant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.tennis.WinStreakSeries.TREE_STREAK_COUNT;
 import static org.tennis.WinStreakSeries.TWO_STREAK_COUNT;
-import static org.tennis.domain.Game.ScorePoint.ADVANTAGE;
-import static org.tennis.domain.Game.ScorePoint.FORTY;
-import static org.tennis.domain.Participant.FIRST;
-import static org.tennis.domain.Participant.SECOND;
+import static org.tennis.domain.game.Game.PointScore.ADVANTAGE;
+import static org.tennis.domain.game.Game.PointScore.FORTY;
+import static org.tennis.domain.game.Participant.FIRST;
+import static org.tennis.domain.game.Participant.SECOND;
 
 public class GameTest {
 
@@ -29,7 +29,7 @@ public class GameTest {
         winPoints(SECOND, game, TREE_STREAK_COUNT);
         winPoints(FIRST, game, TWO_STREAK_COUNT);
 
-        Game.Point resultPoint = game.getPoints().getLast();
+        Game.Point resultPoint = game.getLastPoint().orElseThrow();
 
         assertEquals(expectedPoint, resultPoint);
         assertEquals(FIRST, game.getWinner());
@@ -50,7 +50,7 @@ public class GameTest {
     }
 
     private void winPoints(Participant participant, Game game, WinStreakSeries winStreakSeries) {
-        for (int i = 1; i <= winStreakSeries.getSize(); i++) {
+        for (int i = 1; i <= winStreakSeries.getCount(); i++) {
             game.point(participant);
         }
     }

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.model.OngoingMatch;
 import org.tennis.application.service.OngoingMatchesService;
+import org.tennis.domain.game.Match;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -33,7 +34,7 @@ public class CreateMatchServlet extends HttpServlet {
         validateName(firstPlayerName);
         validateName(secondPlayerName);
         // TODO: сохранить или получить id
-        OngoingMatch match = new OngoingMatch(firstPlayerName, secondPlayerName, new org.tennis.domain.Match());
+        OngoingMatch match = new OngoingMatch(firstPlayerName, secondPlayerName, new Match());
         String matchId = ongoingMatchesService.add(match);
         resp.sendRedirect(String.format("/match-score?uuid=%s", matchId));
     }
