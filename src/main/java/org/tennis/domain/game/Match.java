@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 public class Match {
@@ -17,13 +16,13 @@ public class Match {
     @Getter(AccessLevel.NONE)
     protected final List<Set> sets = new LinkedList<>();
 
+    public Match() {
+        sets.add(new Set());
+    }
+
     public void play(Participant pointWinner) {
         if (isComplete) {
             return;
-        }
-        if (sets.isEmpty()) {
-            // TODO: инвертировать зависимость
-            sets.add(new Set());
         }
         Set lastSet = sets.getLast();
         lastSet.play(pointWinner);
@@ -37,11 +36,8 @@ public class Match {
         }
     }
 
-    public Optional<Set> getLastSet() {
-        if (sets.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(sets.getLast());
+    public Set getLastSet() {
+        return sets.getLast();
     }
 
     private boolean isLastPoint(Participant pointWinner) {

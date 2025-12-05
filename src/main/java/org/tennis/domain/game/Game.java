@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static org.tennis.domain.game.Participant.FIRST;
 import static org.tennis.domain.game.Participant.SECOND;
@@ -20,15 +19,12 @@ public class Game {
     @Getter(AccessLevel.NONE)
     private final List<Point> points = new LinkedList<>();
 
+    public Game() {
+        points.add(new Point(PointScore.ZERO, PointScore.ZERO));
+    }
+
     public void point(Participant pointWinner) {
         if (isComplete) {
-            return;
-        }
-        if (points.isEmpty()) {
-            switch (pointWinner) {
-                case FIRST -> points.add(new Point(PointScore.FIFTEEN, PointScore.ZERO));
-                case SECOND -> points.add(new Point(PointScore.ZERO, PointScore.FIFTEEN));
-            }
             return;
         }
         Point previousPoint = points.getLast();
@@ -41,11 +37,8 @@ public class Game {
         }
     }
 
-    public Optional<Point> getLastPoint() {
-        if (points.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(points.getLast());
+    public Point getLastPoint() {
+        return points.getLast();
     }
 
     @RequiredArgsConstructor

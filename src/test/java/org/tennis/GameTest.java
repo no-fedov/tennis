@@ -29,7 +29,7 @@ public class GameTest {
         winPoints(SECOND, game, TREE_STREAK_COUNT);
         winPoints(FIRST, game, TWO_STREAK_COUNT);
 
-        Game.Point resultPoint = game.getLastPoint().orElseThrow();
+        Game.Point resultPoint = game.getLastPoint();
 
         assertEquals(expectedPoint, resultPoint);
         assertEquals(FIRST, game.getWinner());

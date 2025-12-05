@@ -16,7 +16,7 @@ public class TieBreakTest {
         TieBreak tieBreak = new TieBreak();
 
         tieBreak.point(FIRST);
-        TieBreak.TieBreakPoint point = tieBreak.getLastPoint().orElseThrow();
+        TieBreak.TieBreakPoint point = tieBreak.getLastPoint();
         int firstScore = point.firstScore();
         int secondScore = point.secondScore();
 
@@ -29,7 +29,7 @@ public class TieBreakTest {
         TieBreak tieBreak = new TieBreak();
 
         winStreakPoints(FIRST, tieBreak, SEVEN_STREAK_COUNT);
-        TieBreak.TieBreakPoint point = tieBreak.getLastPoint().orElseThrow();
+        TieBreak.TieBreakPoint point = tieBreak.getLastPoint();
 
         assertTrue(tieBreak.isComplete());
         assertEquals(FIRST, tieBreak.getWinner());

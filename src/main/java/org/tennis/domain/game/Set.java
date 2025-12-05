@@ -29,6 +29,10 @@ public class Set {
     @Getter(AccessLevel.NONE)
     protected final List<Game> games = new LinkedList<>();
 
+    public Set() {
+        games.add(new Game());
+    }
+
     public void play(Participant pointWinner) {
         if (isComplete) {
             return;
@@ -36,10 +40,6 @@ public class Set {
         if (tieBreak != null) {
             pointTieBreak(pointWinner);
             return;
-        }
-        if (games.isEmpty()) {
-            // TODO: инвертировать зависимость
-            games.add(new Game());
         }
         Game lastGame = games.getLast();
         lastGame.point(pointWinner);
@@ -51,7 +51,6 @@ public class Set {
         if (lastGame.isComplete() && games.size() == MAX_COUNT_GAME) {
             // TODO: инвертировать зависимость
             tieBreak = new TieBreak();
-            pointTieBreak(pointWinner);
             return;
         }
         if (lastGame.isComplete()) {
@@ -60,11 +59,8 @@ public class Set {
         }
     }
 
-    public Optional<Game> getLastGame() {
-        if (games.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(games.getLast());
+    public Game getLastGame() {
+        return games.getLast();
     }
 
     public Optional<TieBreak> getTieBreak() {

@@ -6,7 +6,6 @@ import org.tennis.domain.score.SetScore;
 import org.tennis.domain.score.TiebreakScore;
 
 import java.util.Map;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.counting;
@@ -18,25 +17,19 @@ public class MatchScoreCalculator {
 
     public PointScore calculatePoint(Match match) {
         Game.Point lastPoint = match.getLastSet()
-                .flatMap(Set::getLastGame)
-                .flatMap(Game::getLastPoint)
-                .orElse(new Game.Point(Game.PointScore.ZERO, Game.PointScore.ZERO));
+                .getLastGame()
+                .getLastPoint();
         return new PointScore(lastPoint.firstScore().description, lastPoint.secondScore().description);
     }
 
     public TiebreakScore calculateTiebreakPoint(TieBreak tieBreak) {
-        TieBreak.TieBreakPoint lastPoint = tieBreak.getLastPoint()
-                .orElse(new TieBreak.TieBreakPoint(START_SCORE, START_SCORE));
+        TieBreak.TieBreakPoint lastPoint = tieBreak.getLastPoint();
         return new TiebreakScore(lastPoint.firstScore(), lastPoint.secondScore());
     }
 
     public GameScore calculateGameScore(Match match) {
-        Optional<Set> lastSet = match.getLastSet();
-        if (lastSet.isEmpty()) {
-            return new GameScore(START_SCORE, START_SCORE);
-        }
-        Set currentSet = lastSet.get();
-        Map<Participant, Integer> playersGameScore = currentSet.games.stream()
+        Set lastSet = match.getLastSet();
+        Map<Participant, Integer> playersGameScore = lastSet.games.stream()
                 .filter(Game::isComplete)
                 .collect(groupingBy(Game::getWinner, collectingAndThen(counting(), Long::intValue)));
         return new GameScore(
