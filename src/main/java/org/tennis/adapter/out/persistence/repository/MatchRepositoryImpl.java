@@ -3,7 +3,6 @@ package org.tennis.adapter.out.persistence.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.tennis.application.entity.MatchEntity;
 import org.tennis.application.port.out.persistence.MatchRepository;

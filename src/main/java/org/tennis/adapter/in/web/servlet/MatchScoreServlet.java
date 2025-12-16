@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.dto.MatchScoreDto;
 import org.tennis.application.model.OngoingMatch;
-import org.tennis.application.service.MatchScoreCalculationService;
 import org.tennis.application.port.in.service.MatchService;
+import org.tennis.application.service.MatchScoreCalculationService;
 import org.tennis.application.service.OngoingMatchesService;
 import org.tennis.domain.game.Participant;
 

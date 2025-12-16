@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.tennis.domain.game.Participant.FIRST;
 import static org.tennis.domain.util.MatchProgressChecker.isFinish;

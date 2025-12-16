@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.tennis.application.dto.PlayerDto;
 import org.tennis.application.entity.PlayerEntity;
 import org.tennis.application.mapper.PlayerMapper;
-import org.tennis.application.port.out.persistence.PlayerRepository;
 import org.tennis.application.port.in.service.PlayerService;
-
-import java.util.Optional;
+import org.tennis.application.port.out.persistence.PlayerRepository;
 
 @RequiredArgsConstructor
 public class PlayerServiceImpl implements PlayerService {
