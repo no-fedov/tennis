@@ -28,6 +28,7 @@ public class MatchScoreCalculationService {
         TiebreakScore tiebreakScore = Objects.isNull(tieBreak)
                 ? null
                 : scoreCalculator.calculateTiebreakPoint(tieBreak);
+        String winnerName = getWinnerName(match);
         return new MatchScoreDto(
                 match.firstPlayerName(),
                 match.secondPlayerName(),
@@ -35,6 +36,18 @@ public class MatchScoreCalculationService {
                 gameScore,
                 setScore,
                 tiebreakScore,
-                currentMatch.isComplete());
+                currentMatch.isComplete(),
+                winnerName);
+    }
+
+    private String getWinnerName(OngoingMatch match) {
+        Match currentMatch = match.match();
+        if (currentMatch.getWinner() == null) {
+            return null;
+        }
+        return switch (match.match().getWinner()) {
+            case FIRST -> match.firstPlayerName();
+            case SECOND -> match.secondPlayerName();
+        };
     }
 }

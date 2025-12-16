@@ -12,5 +12,6 @@ public record MatchScoreDto(
         GameScore gameScore,
         SetScore setScore,
         TiebreakScore tiebreakScore,
-        boolean isComplete) {
+        boolean isComplete,
+        String winner) {
 }

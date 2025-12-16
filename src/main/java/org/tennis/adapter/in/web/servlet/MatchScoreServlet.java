@@ -1,6 +1,7 @@
 package org.tennis.adapter.in.web.servlet;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.dto.MatchScoreDto;
 import org.tennis.application.model.OngoingMatch;
 import org.tennis.application.service.MatchScoreCalculationService;
+import org.tennis.application.port.in.service.MatchService;
 import org.tennis.application.service.OngoingMatchesService;
 import org.tennis.domain.game.Participant;
 
@@ -22,11 +24,14 @@ public class MatchScoreServlet extends HttpServlet {
 
     private OngoingMatchesService ongoingMatchesService;
     private MatchScoreCalculationService matchScoreCalculationService;
+    private MatchService matchService;
 
     @Override
     public void init() throws ServletException {
-        this.ongoingMatchesService = (OngoingMatchesService) getServletContext().getAttribute("ongoingMatchesService");
-        this.matchScoreCalculationService = (MatchScoreCalculationService) getServletContext().getAttribute("matchScoreCalculationService");
+        ServletContext context = getServletContext();
+        this.ongoingMatchesService = (OngoingMatchesService) context.getAttribute("ongoingMatchesService");
+        this.matchScoreCalculationService = (MatchScoreCalculationService) context.getAttribute("matchScoreCalculationService");
+        this.matchService = (MatchService) context.getAttribute("matchService");
     }
 
     @Override
@@ -47,6 +52,10 @@ public class MatchScoreServlet extends HttpServlet {
         ongoingMatch.play(pointWinnerParticipant);
         MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
         req.setAttribute("match_score", matchScoreDto);
+        if (ongoingMatch.isComplete()) {
+            ongoingMatchesService.deleteById(matchId);
+            matchService.create(matchScoreDto);
+        }
         forwardToScoreView(req, resp);
     }
 
