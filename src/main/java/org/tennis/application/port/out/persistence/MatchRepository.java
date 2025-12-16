@@ -8,5 +8,5 @@ public interface MatchRepository {
 
     void save(MatchEntity match);
 
-    List<MatchEntity> findComplete();
+    List<MatchEntity> findComplete(Integer pageSize, Integer pageNumber, String playerName);
 }

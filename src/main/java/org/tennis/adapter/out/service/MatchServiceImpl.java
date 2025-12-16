@@ -23,8 +23,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<MatchDto> findComplete() {
-        List<MatchEntity> complete = matchRepository.findComplete();
+    public List<MatchDto> findComplete(Integer pageSize, Integer pageNumber, String playerName) {
+        List<MatchEntity> complete = matchRepository.findComplete(pageSize, pageNumber, playerName);
         return matchMapper.toDtos(complete);
     }
 }
