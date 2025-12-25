@@ -37,7 +37,8 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String matchId = req.getParameter("uuid");
-        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId).orElseThrow(() -> new IllegalStateException());
+        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId)
+                .orElseThrow(() -> new NotFoundException("Match complete or not exist"));
         MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
         req.setAttribute("match_score", matchScoreDto);
         forwardToScoreView(req, resp);
@@ -48,7 +49,8 @@ public class MatchScoreServlet extends HttpServlet {
         String matchId = req.getParameter("uuid");
         String pointWinner = req.getParameter("point_winner");
         Participant pointWinnerParticipant = getParticipant(pointWinner);
-        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId).orElseThrow(() -> new IllegalStateException());
+        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId)
+                .orElseThrow(() -> new NotFoundException("Match complete or not exist"));
         ongoingMatch.play(pointWinnerParticipant);
         MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
         req.setAttribute("match_score", matchScoreDto);

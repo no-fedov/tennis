@@ -30,7 +30,6 @@ public class MatchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pageNumber = req.getParameter(PAGE_NUMBER_QUERY_PARAMETER);
         String playerName = req.getParameter(PLAYER_NAME_QUERY_PARAMETER);
-
         List<MatchDto> completeMatches = matchService.findComplete(PAGE_SIZE, checkPageNumber(pageNumber), playerName);
         req.setAttribute("completeMatches", completeMatches);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/matches.jsp");

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <header class="home-page-nav">
+    <header class="nav-panel">
         <div>
             TennisScoreboard
         </div>
@@ -21,11 +21,11 @@
             <form action="/new-match" method="post">
                 <p>
                     Первый игрок:
-                    <input type="text" name="first_player">
+                    <input type="text" name="first_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
                 </p>
                 <p>
                     Второй игрок:
-                    <input type="text" name="second_player">
+                    <input type="text" name="second_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
                 </p>
                 <button type="submit">Начать новый матч</button>
             </form>

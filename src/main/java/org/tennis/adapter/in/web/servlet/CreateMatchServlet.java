@@ -13,7 +13,6 @@ import org.tennis.application.service.OngoingMatchesService;
 import org.tennis.domain.game.Match;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +21,7 @@ public class CreateMatchServlet extends HttpServlet {
 
     private static final String FIRST_PLAYER_PARAMETER = "first_player";
     private static final String SECOND_PLAYER_PARAMETER = "second_player";
-    private static final Pattern PATTERN_FOR_NAME = Pattern.compile("^\\w{5,20}$");
+    private static final Pattern PATTERN_FOR_NAME = Pattern.compile("^[A-Za-zА-Яа-яЁё\\s]{1,50}$");
 
     private OngoingMatchesService ongoingMatchesService;
     private PlayerService playerService;
