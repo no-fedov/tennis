@@ -7,6 +7,8 @@ import org.tennis.application.mapper.PlayerMapper;
 import org.tennis.application.port.in.service.PlayerService;
 import org.tennis.application.port.out.persistence.PlayerRepository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class PlayerServiceImpl implements PlayerService {
 
@@ -20,8 +22,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerDto findByName(String name) {
-        PlayerEntity player = playerRepository.findByName(name).orElseThrow();
-        return playerMapper.toDto(player);
+    public Optional<PlayerDto> findByName(String name) {
+        Optional<PlayerEntity> player = playerRepository.findByName(name);
+        return player.map(playerMapper::toDto);
     }
 }

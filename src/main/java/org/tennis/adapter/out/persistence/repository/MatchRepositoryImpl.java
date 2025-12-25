@@ -34,7 +34,7 @@ public class MatchRepositoryImpl implements MatchRepository {
             CriteriaQuery<MatchEntity> query = builder.createQuery(MatchEntity.class);
             Root<MatchEntity> root = query.from(MatchEntity.class);
             query.select(root);
-            if (Objects.nonNull(pageNumber)) {
+            if (Objects.nonNull(playerName)) {
                 query.where(
                         builder.equal(root.join("winner").get("name"), playerName)
                 );

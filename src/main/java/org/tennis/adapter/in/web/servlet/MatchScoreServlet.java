@@ -27,7 +27,7 @@ public class MatchScoreServlet extends HttpServlet {
     private MatchService matchService;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         ServletContext context = getServletContext();
         this.ongoingMatchesService = (OngoingMatchesService) context.getAttribute("ongoingMatchesService");
         this.matchScoreCalculationService = (MatchScoreCalculationService) context.getAttribute("matchScoreCalculationService");

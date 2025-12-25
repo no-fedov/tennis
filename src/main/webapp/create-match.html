@@ -2,19 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Match</title>
+    <title>Tennis | New Match</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <form action="/new-match" method="post">
-        <p>
-            Первый игрок:
-            <input type="text" name="first_player">
-        </p>
-        <p>
-            Второй игрок:
-            <input type="text" name="second_player">
-        </p>
-        <button type="submit">Начать новый матч</button>
-    </form>
+    <header class="home-page-nav">
+        <div>
+            TennisScoreboard
+        </div>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/matches">Завершенные матчи</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="center">
+            <form action="/new-match" method="post">
+                <p>
+                    Первый игрок:
+                    <input type="text" name="first_player">
+                </p>
+                <p>
+                    Второй игрок:
+                    <input type="text" name="second_player">
+                </p>
+                <button type="submit">Начать новый матч</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

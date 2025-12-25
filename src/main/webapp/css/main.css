@@ -1,0 +1,33 @@
+ul {
+    text-align: center;
+    list-style-type: none;
+    padding: 0%;
+    padding-top: 5em;
+    padding-inline-start: 0px;
+}
+
+ul>li {
+    padding: 0%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.home-page-nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-page-main {
+    display: block;
+    margin: 5em;
+}
+
+.center {
+    display: block;
+    width: 1000px;
+    padding: 3em;
+    margin-left: auto;
+    margin-right: auto;
+}
