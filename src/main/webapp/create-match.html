@@ -7,9 +7,9 @@
 </head>
 <body>
     <header class="nav-panel">
-        <div>
+        <span>
             TennisScoreboard
-        </div>
+        </span>
         <nav>
             <a href="/">Главная</a>
             <a href="/matches">Завершенные матчи</a>
@@ -21,11 +21,11 @@
             <form action="/new-match" method="post">
                 <p>
                     Первый игрок:
-                    <input type="text" name="first_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
+                    <input required type="text" name="first_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
                 </p>
                 <p>
                     Второй игрок:
-                    <input type="text" name="second_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
+                    <input required type="text" name="second_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
                 </p>
                 <button type="submit">Начать новый матч</button>
             </form>

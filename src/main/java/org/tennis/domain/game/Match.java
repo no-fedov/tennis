@@ -24,7 +24,7 @@ public class Match {
         if (isComplete) {
             return;
         }
-        Set lastSet = sets.getLast();
+        Set lastSet = getLastSet();
         lastSet.play(pointWinner);
         if (isLastPoint(pointWinner)) {
             this.winner = pointWinner;

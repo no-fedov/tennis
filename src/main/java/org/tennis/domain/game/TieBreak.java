@@ -30,7 +30,7 @@ public class TieBreak {
         if (isComplete) {
             return;
         }
-        TieBreakPoint lastPoint = points.getLast();
+        TieBreakPoint lastPoint = getLastPoint();
         TieBreakPoint currentPoint = lastPoint.next(pointWinner);
         points.add(currentPoint);
         if (isLastPoint(currentPoint)) {

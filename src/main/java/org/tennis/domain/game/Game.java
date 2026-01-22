@@ -27,7 +27,7 @@ public class Game {
         if (isComplete) {
             return;
         }
-        Point previousPoint = points.getLast();
+        Point previousPoint = getLastPoint();
         Point nextPoint = previousPoint.nextPoint(pointWinner);
         if (Objects.equals(previousPoint, nextPoint)) {
             isComplete = true;

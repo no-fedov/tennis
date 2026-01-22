@@ -58,6 +58,7 @@ public class MatchScoreServlet extends HttpServlet {
             ongoingMatchesService.deleteById(matchId);
             matchService.create(matchScoreDto);
         }
+//        resp.setStatus(HttpServletResponse.SC_CREATED);
         forwardToScoreView(req, resp);
     }
 

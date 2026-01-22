@@ -41,7 +41,7 @@ public class Set {
             pointTieBreak(pointWinner);
             return;
         }
-        Game lastGame = games.getLast();
+        Game lastGame = getLastGame();
         lastGame.point(pointWinner);
         if (thisComplete()) {
             this.winner = pointWinner;
