@@ -1,32 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Tennis | Home Page</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
-    <header class="nav-panel">
-        <div>
-            TennisScoreboard
-        </div>
+    <header>
+        <span class="nav-description">TennisScoreboard</span>
         <nav>
-            <a href="/">Главная</a>
-            <a href="/matches">Завершенные матчи</a>
+            <a class="nav-button-link" href="/">Домой</a>
+            <a class="nav-button-link" href="/matches">Матчи</a>
         </nav>
     </header>
 
-    <main class="center">
-        <article>
+    <main>
+        <section>
             <h1>Добро пожаловать на проект "Табло теннисного матча"</h1>
             <p>Регистрируйте матч, ведите счет матча, просматривайте завершенные матчи</p>
-        </article>
-        <ul>
-            <li><a href="/new-match">Новая игра</a></li>
-            <li><a href="/matches">Завершенные матчи</a></li>
-        </ul>
+        </section>
+        <section>
+            <ul class="button-list">
+                <li><a class="button-link" href="/new-match">Новая игра</a></li>
+                <li><a class="button-link" href="/matches">Матчи</a></li>
+            </ul>
+        </section>
     </main>
-
 </body>
 </html>

@@ -9,17 +9,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Tennis | Completed Matches</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="nav-panel">
-            <div>
-                TennisScoreboard
-            </div>
-            <nav>
-                <a href="/">Главная</a>
-                <a href="/matches">Завершенные матчи</a>
-            </nav>
+    <header>
+        <span class="nav-description">TennisScoreboard</span>
+        <nav>
+            <a class="nav-button-link" href="/">Домой</a>
+            <a class="nav-button-link" href="/matches">Матчи</a>
+        </nav>
     </header>
     <main>
         <h1>Completed Matches</h1>
@@ -32,28 +30,28 @@
         List<MatchDto> completeMatches = (List<MatchDto>) request.getAttribute("completeMatches");
     %>
 
-    <table class="center">
-        <thead>
-            <tr>
-                <td>First Player</td>
-                <td>Second Player</td>
-                <td>Winner</td>
-            </tr>
-        </thead>
-        <tbody>
-                <%
-                for (MatchDto match : completeMatches) {
-                %>
-                    <tr>
-                      <td><%= match.firstPlayerName() %></td>
-                      <td><%= match.secondPlayerName() %></td>
-                      <td><%= match.winner() %></td>
-                    </tr>
-                <%
-                }
-                %>
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Player</td>
+                    <th>Second Player</td>
+                    <th>Winner</td>
+                </tr>
+            </thead>
+            <tbody>
+                    <%
+                    for (MatchDto match : completeMatches) {
+                    %>
+                        <tr>
+                          <td><%= match.firstPlayerName() %></td>
+                          <td><%= match.secondPlayerName() %></td>
+                          <td><%= match.winner() %></td>
+                        </tr>
+                    <%
+                    }
+                    %>
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

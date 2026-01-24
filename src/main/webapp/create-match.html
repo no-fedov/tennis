@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Tennis | New Match</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header class="nav-panel">
-        <span>
-            TennisScoreboard
-        </span>
+    <header>
+        <span class="nav-description">TennisScoreboard</span>
         <nav>
-            <a href="/">Главная</a>
-            <a href="/matches">Завершенные матчи</a>
+            <a class="nav-button-link" href="/">Домой</a>
+            <a class="nav-button-link" href="/matches">Матчи</a>
         </nav>
     </header>
 
     <main>
-        <div class="center">
-            <form action="/new-match" method="post">
-                <p>
-                    Первый игрок:
-                    <input required type="text" name="first_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
-                </p>
-                <p>
-                    Второй игрок:
-                    <input required type="text" name="second_player" pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$">
-                </p>
-                <button type="submit">Начать новый матч</button>
+        <section>
+            <form class="form" action="/new-match" method="post">
+                <label  class="player-name-label"
+                        for="first_player">
+                    Первый игрок
+                </label><br>
+                <input  class="player-name-input"
+                        type="text"
+                        id="first_player"
+                        name="first_player"
+                        pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$"
+                        required>
+                <br>
+                <label  class="player-name-label"
+                        for="first_player">
+                    Второй игрок
+                </label><br>
+                <input  class="player-name-input"
+                        type="text"
+                        id="second_player"
+                        name="second_player"
+                        pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$"
+                        required>
+                <br>
+                <button class="button-link" type="submit">Начать новый матч</button>
             </form>
-        </div>
+        </section>
     </main>
 </body>
 </html>
