@@ -1,9 +1,10 @@
 package org.tennis.adapter.in.web.servlet.util;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class PaginationUtil {
@@ -29,16 +30,20 @@ public class PaginationUtil {
         }
         try {
             int number = Integer.parseInt(pageNumber);
-            if (number > pagesCount) {
-                number = pagesCount;
-            }
-            if (number < START_POSITION) {
-                number = START_POSITION;
-            }
-            return number;
+            return getValidPageNumber(number, pagesCount);
         } catch (NumberFormatException e) {
             return START_POSITION;
         }
+    }
+
+    public static Integer getValidPageNumber(int pageNumber, int pagesCount) {
+        if (pageNumber > pagesCount) {
+            pageNumber = pagesCount;
+        }
+        if (pageNumber < START_POSITION) {
+            pageNumber = START_POSITION;
+        }
+        return pageNumber;
     }
 
     public static List<String> getPaginationAnchors(String path,
@@ -49,13 +54,29 @@ public class PaginationUtil {
         if (numbers.size() <= START_POSITION) {
             return List.of();
         }
-        List<String> anchors = new ArrayList<>();
+        List<String> anchors = new LinkedList<>();
         for (Integer pageNumber : numbers) {
             boolean isCurrent = pageNumber == currentPage;
             String link = prepareAnchor(path, pageNumber, parameters, isCurrent);
             anchors.add(link);
         }
+        if (!numbers.isEmpty()) {
+            anchors.addFirst(prepareSwitchAnchor("<", path, currentPage, pagesCount, position -> position - START_POSITION, parameters));
+            anchors.addLast(prepareSwitchAnchor(">", path, currentPage, pagesCount, position -> position + START_POSITION, parameters));
+        }
         return anchors;
+    }
+
+    private static String prepareSwitchAnchor(String symbol,
+                                              String path,
+                                              int currentPage,
+                                              int pagesCount,
+                                              Function<Integer, Integer> switchFunction,
+                                              Map<String, Object> parameters) {
+        Integer nextPosition = getValidPageNumber(switchFunction.apply(currentPage), pagesCount);
+        preparePageParameter(nextPosition, parameters);
+        String href = buildQueryParameter(path, parameters);
+        return ANCHOR_TEMPLATE.formatted(href, "", symbol);
     }
 
     private static String prepareAnchor(String path, Integer pageNumber, Map<String, Object> parameters, boolean isCurrent) {
@@ -79,7 +100,7 @@ public class PaginationUtil {
     }
 
     private static void preparePageParameter(Integer pageNumber, Map<String, Object> parameters) {
-        parameters.put("page", pageNumber);
+        parameters.put(PAGE_NUMBER_QUERY_PARAMETER, pageNumber);
     }
 
     private static List<Integer> calculatePageNumbers(int currentPage, int amountPages) {
