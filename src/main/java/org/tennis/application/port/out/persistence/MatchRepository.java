@@ -9,4 +9,6 @@ public interface MatchRepository {
     void save(MatchEntity match);
 
     List<MatchEntity> findComplete(Integer pageSize, Integer pageNumber, String playerName);
+
+    Long countComplete(String playerName);
 }

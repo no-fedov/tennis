@@ -27,4 +27,9 @@ public class MatchServiceImpl implements MatchService {
         List<MatchEntity> complete = matchRepository.findComplete(pageSize, pageNumber, playerName);
         return matchMapper.toDtos(complete);
     }
+
+    @Override
+    public Long countComplete(String playerName) {
+        return matchRepository.countComplete(playerName);
+    }
 }

@@ -1,5 +1,5 @@
 <%@ page    language="java"
-            import="org.tennis.application.dto.MatchDto, java.util.List"
+            import="org.tennis.application.dto.MatchDto, org.tennis.adapter.in.web.servlet.MatchServlet, java.util.List"
             contentType="text/html; charset=UTF-8"
             pageEncoding="UTF-8"
 %>
@@ -40,7 +40,7 @@
             </thead>
             <tbody>
                     <%
-                    for (MatchDto match : completeMatches) {
+                        for (MatchDto match : completeMatches) {
                     %>
                         <tr>
                           <td><%= match.firstPlayerName() %></td>
@@ -48,10 +48,13 @@
                           <td><%= match.winner() %></td>
                         </tr>
                     <%
-                    }
+                        }
                     %>
             </tbody>
         </table>
+
+        <%@include file="pagination.jsp" %>
+
     </main>
 </body>
 </html>

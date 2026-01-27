@@ -8,6 +8,8 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.tennis.application.entity.MatchEntity;
+import org.tennis.application.entity.MatchEntity_;
+import org.tennis.application.entity.PlayerEntity_;
 import org.tennis.application.port.out.persistence.MatchRepository;
 
 import java.util.List;
@@ -36,18 +38,32 @@ public class MatchRepositoryImpl implements MatchRepository {
             query.select(root);
             if (Objects.nonNull(playerName)) {
                 query.where(
-                        builder.equal(root.join("winner").get("name"), playerName)
+                        builder.equal(root.join(MatchEntity_.WINNER).get(PlayerEntity_.NAME), playerName)
                 );
             }
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            List<MatchEntity> fromMatchEntity = entityManager
+            return entityManager
                     .createQuery(query)
                     .setFirstResult((pageNumber - 1) * pageSize)
                     .setMaxResults(pageSize)
                     .getResultList();
-            transaction.commit();
-            return fromMatchEntity;
+        }
+    }
+
+    @Override
+    public Long countComplete(String playerName) {
+        try (EntityManager entityManager = emf.createEntityManager()) {
+            CriteriaBuilder builder = emf.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root<MatchEntity> root = query.from(MatchEntity.class);
+            query.select(builder.count(root));
+            if (Objects.nonNull(playerName)) {
+                query.where(
+                        builder.equal(root.join(MatchEntity_.WINNER).get(PlayerEntity_.NAME), playerName)
+                );
+            }
+            return entityManager
+                    .createQuery(query)
+                    .getSingleResult();
         }
     }
 }
