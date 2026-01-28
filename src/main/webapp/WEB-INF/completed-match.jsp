@@ -1,0 +1,45 @@
+<%@ page    language="java"
+            import="org.tennis.application.dto.MatchDto"
+            contentType="text/html; charset=UTF-8"
+            pageEncoding="UTF-8"
+%>
+
+<% MatchDto match = (MatchDto) request.getAttribute("completed-match"); %>
+
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>TennisScoreboard | Match Complete</title>
+        <link rel="stylesheet" href="css/styles.css">
+    <head>
+
+    <body>
+        <header>
+            <span class="nav-description">TennisScoreboard</span>
+            <nav>
+                <a class="nav-button-link" href="/">Домой</a>
+                <a class="nav-button-link" href="/matches">Матчи</a>
+            </nav>
+        </header>
+        <main>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Player</td>
+                        <th>Second Player</td>
+                        <th>Winner</td>
+                    </tr>
+                </thead>
+                <tbody>
+                            <tr>
+                              <td><%= match.firstPlayerName() %></td>
+                              <td><%= match.secondPlayerName() %></td>
+                              <td><%= match.winner() %></td>
+                            </tr>
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>

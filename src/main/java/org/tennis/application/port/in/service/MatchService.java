@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface MatchService {
 
-    void create(MatchScoreDto dto);
+    Long create(MatchScoreDto dto);
+
+    MatchDto findById(Long id);
 
     List<MatchDto> findComplete(Integer pageSize, Integer pageNumber, String playerName);
 

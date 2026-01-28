@@ -16,8 +16,7 @@ import org.tennis.domain.game.Participant;
 
 import java.io.IOException;
 
-import static org.tennis.domain.game.Participant.FIRST;
-import static org.tennis.domain.game.Participant.SECOND;
+import static org.tennis.domain.game.Participant.getParticipant;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
@@ -46,33 +45,28 @@ public class MatchScoreServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String matchId = req.getParameter("uuid");
+        String matchUUID = req.getParameter("uuid");
         String pointWinner = req.getParameter("point_winner");
         Participant pointWinnerParticipant = getParticipant(pointWinner);
-        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchId)
+        OngoingMatch ongoingMatch = ongoingMatchesService.get(matchUUID)
                 .orElseThrow(() -> new NotFoundException("Match complete or not exist"));
         ongoingMatch.play(pointWinnerParticipant);
         MatchScoreDto matchScoreDto = matchScoreCalculationService.calculatePointGameScore(ongoingMatch);
         req.setAttribute("match_score", matchScoreDto);
+
         if (ongoingMatch.isComplete()) {
-            ongoingMatchesService.deleteById(matchId);
-            matchService.create(matchScoreDto);
+            Long matchId = matchService.create(matchScoreDto);
+            ongoingMatchesService.deleteById(matchUUID);
+            resp.sendRedirect(String.format("/matches?id=%s", matchId));
+            return;
         }
-//        resp.setStatus(HttpServletResponse.SC_CREATED);
-        forwardToScoreView(req, resp);
+
+        resp.sendRedirect(String.format("/match-score?uuid=%s", matchUUID));
     }
 
     private void forwardToScoreView(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/score-view.jsp");
         requestDispatcher.forward(req, resp);
-    }
-
-    private Participant getParticipant(String string) {
-        return switch (string) {
-            case "FIRST" -> FIRST;
-            case "SECOND" -> SECOND;
-            default -> throw new IllegalStateException();
-        };
     }
 }

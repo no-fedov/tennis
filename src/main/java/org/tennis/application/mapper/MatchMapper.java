@@ -26,6 +26,7 @@ public class MatchMapper {
 
     public MatchDto toDto(MatchEntity entity) {
         return new MatchDto(
+                entity.getId(),
                 entity.getFirstPlayer().getName(),
                 entity.getSecondPlayer().getName(),
                 entity.getWinner().getName()

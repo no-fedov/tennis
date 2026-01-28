@@ -27,7 +27,7 @@
         </form>
 
     <%
-        List<MatchDto> completeMatches = (List<MatchDto>) request.getAttribute("completeMatches");
+        List<MatchDto> completeMatches = (List<MatchDto>) request.getAttribute("completedMatches");
     %>
 
         <table>

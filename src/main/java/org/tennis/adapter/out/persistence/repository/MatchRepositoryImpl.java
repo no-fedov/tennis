@@ -14,6 +14,7 @@ import org.tennis.application.port.out.persistence.MatchRepository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class MatchRepositoryImpl implements MatchRepository {
@@ -26,6 +27,13 @@ public class MatchRepositoryImpl implements MatchRepository {
             transaction.begin();
             entityManager.persist(match);
             transaction.commit();
+        }
+    }
+
+    @Override
+    public Optional<MatchEntity> findById(Long id) {
+        try (EntityManager entityManager = emf.createEntityManager()) {
+            return Optional.ofNullable(entityManager.find(MatchEntity.class, id));
         }
     }
 

@@ -1,7 +1,19 @@
 package org.tennis.domain.game;
 
-public enum Participant {
+import lombok.RequiredArgsConstructor;
 
-    FIRST,
-    SECOND
+@RequiredArgsConstructor
+public enum Participant {
+    FIRST("FIRST"),
+    SECOND("SECOND");
+
+    private final String description;
+
+    public static Participant getParticipant(String string) {
+        return switch (string) {
+            case "FIRST" -> FIRST;
+            case "SECOND" -> SECOND;
+            default -> throw new IllegalStateException();
+        };
+    }
 }

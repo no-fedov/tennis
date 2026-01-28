@@ -1,4 +1,4 @@
 package org.tennis.application.dto;
 
-public record MatchDto(String firstPlayerName, String secondPlayerName, String winner) {
+public record MatchDto(Long id, String firstPlayerName, String secondPlayerName, String winner) {
 }
