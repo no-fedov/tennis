@@ -21,7 +21,7 @@ public class CreateMatchServlet extends HttpServlet {
 
     private static final String FIRST_PLAYER_PARAMETER = "first_player";
     private static final String SECOND_PLAYER_PARAMETER = "second_player";
-    private static final Pattern PATTERN_FOR_NAME = Pattern.compile("^[A-Za-zА-Яа-яЁё\\s]{1,50}$");
+    private static final Pattern PATTERN_FOR_NAME = Pattern.compile("^[\\p{L}\\s]{1,20}$", Pattern.UNICODE_CHARACTER_CLASS);
 
     private OngoingMatchesService ongoingMatchesService;
     private PlayerService playerService;
@@ -51,7 +51,6 @@ public class CreateMatchServlet extends HttpServlet {
         requestDispatcher.forward(req, resp);
     }
 
-    // TODO: перепроверить
     private void validateName(String name) {
         Matcher matcher = PATTERN_FOR_NAME.matcher(name);
         boolean matches = matcher.matches();

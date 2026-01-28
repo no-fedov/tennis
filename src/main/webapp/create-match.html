@@ -25,7 +25,7 @@
                         type="text"
                         id="first_player"
                         name="first_player"
-                        pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$"
+                        pattern="^[\p{L}\s]{1,20}$"
                         required>
                 <br>
                 <label  class="player-name-label"
@@ -36,7 +36,7 @@
                         type="text"
                         id="second_player"
                         name="second_player"
-                        pattern="^[A-Za-zА-Яа-яЁё\s]{1,50}$"
+                        pattern="^[\p{L}\s]{1,20}$"
                         required>
                 <br>
                 <button class="button-link" type="submit">Начать новый матч</button>

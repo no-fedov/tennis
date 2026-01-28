@@ -8,12 +8,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<html>
     <head>
         <meta charset="UTF-8">
         <title>TennisScoreboard | Match Complete</title>
         <link rel="stylesheet" href="css/styles.css">
-    <head>
+    </head>
 
     <body>
         <header>
@@ -23,21 +22,22 @@
                 <a class="nav-button-link" href="/matches">Матчи</a>
             </nav>
         </header>
+
         <main>
             <table>
                 <thead>
                     <tr>
-                        <th>First Player</td>
-                        <th>Second Player</td>
-                        <th>Winner</td>
+                        <td>First Player</td>
+                        <td>Second Player</td>
+                        <td>Winner</td>
                     </tr>
                 </thead>
                 <tbody>
-                            <tr>
-                              <td><%= match.firstPlayerName() %></td>
-                              <td><%= match.secondPlayerName() %></td>
-                              <td><%= match.winner() %></td>
-                            </tr>
+                    <tr>
+                      <td><%= match.firstPlayerName() %></td>
+                      <td><%= match.secondPlayerName() %></td>
+                      <td><%= match.winner() %></td>
+                    </tr>
                 </tbody>
             </table>
         </main>

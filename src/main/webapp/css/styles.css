@@ -63,6 +63,14 @@ li {
     background-color: #5e5d60;
 }
 
+button {
+    font-size: 14px;
+    padding-block: 0;
+    padding-inline: 0;
+    border-style: none;
+    border-color: black;
+}
+
 main {
     margin: 10em auto;
     width: 50%;
@@ -85,11 +93,16 @@ main {
 }
 
 table {
-    line-height: 3em;
-    width: 100%;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     border-collapse: collapse;
     table-layout: fixed;
+}
+
+td {
+    padding: 1em;
 }
 
 td:first-child {
@@ -98,10 +111,6 @@ td:first-child {
 
 td:last-child {
     border-top-right-radius: 1em;
-}
-
-td {
-    padding: .5em;
 }
 
 thead {
@@ -113,4 +122,40 @@ thead {
 tr {
     border-color: black;
     border-bottom: 1px;
+}
+
+caption {
+    caption-side: top;
+    padding-bottom: 12px;
+}
+
+.table-caption {
+    display: flex;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-caption h1 {
+    margin: 0;
+}
+
+.table-caption form {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.player-name-input,
+.table-caption button {
+    padding: 8px 12px;
+}
+
+section {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
 }
