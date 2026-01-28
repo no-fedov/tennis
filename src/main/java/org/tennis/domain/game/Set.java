@@ -49,12 +49,10 @@ public class Set {
             return;
         }
         if (lastGame.isComplete() && games.size() == MAX_COUNT_GAME) {
-            // TODO: инвертировать зависимость
             tieBreak = new TieBreak();
             return;
         }
         if (lastGame.isComplete()) {
-            // TODO: инвертировать зависимость
             games.add(new Game());
         }
     }
