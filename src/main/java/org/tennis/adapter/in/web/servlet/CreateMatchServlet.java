@@ -38,8 +38,9 @@ public class CreateMatchServlet extends HttpServlet {
         String secondPlayerName = req.getParameter(SECOND_PLAYER_PARAMETER);
         validateName(firstPlayerName);
         validateName(secondPlayerName);
-        createOrFindPlayer(firstPlayerName);
-        createOrFindPlayer(secondPlayerName);
+        checkUniqueNameMatch(firstPlayerName, secondPlayerName);
+        createPlayer(firstPlayerName);
+        createPlayer(secondPlayerName);
         OngoingMatch match = new OngoingMatch(firstPlayerName, secondPlayerName, new Match());
         String matchId = ongoingMatchesService.add(match);
         resp.sendRedirect(String.format("/match-score?uuid=%s", matchId));
@@ -59,8 +60,13 @@ public class CreateMatchServlet extends HttpServlet {
         }
     }
 
-    private void createOrFindPlayer(String name) {
-        playerService.findByName(name)
-                .ifPresentOrElse(e -> {}, () -> playerService.create(new PlayerDto(name)));
+    private void checkUniqueNameMatch(String firstName, String secondName) {
+        if (firstName.equals(secondName)) {
+            throw new IllegalArgumentException("Player cannot play by himself");
+        }
+    }
+
+    private void createPlayer(String name) {
+        playerService.create(new PlayerDto(name));
     }
 }

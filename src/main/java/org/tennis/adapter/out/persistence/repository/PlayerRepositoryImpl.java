@@ -4,12 +4,15 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.tennis.application.entity.PlayerEntity;
 import org.tennis.application.entity.PlayerEntity_;
 import org.tennis.application.port.out.persistence.PlayerRepository;
 
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 public class PlayerRepositoryImpl implements PlayerRepository {
 
@@ -28,6 +31,8 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             transaction.begin();
             entityManager.persist(player);
             transaction.commit();
+        } catch (ConstraintViolationException e) {
+            log.warn(e.getMessage());
         }
     }
 
