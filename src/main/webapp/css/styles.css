@@ -124,11 +124,6 @@ tr {
     border-bottom: 1px;
 }
 
-caption {
-    caption-side: top;
-    padding-bottom: 12px;
-}
-
 .table-caption {
     display: flex;
     width: 70%;
@@ -154,8 +149,40 @@ caption {
     padding: 8px 12px;
 }
 
-section {
+section form {
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 50%;
+}
+
+.pagination {
+    width: 30%;
+    margin: 2em auto;
+    color: black;
+    text-align: center;
+}
+
+.pagination a {
+    color: black;
+    padding: 0.5em;
+    text-decoration: none;
+}
+
+.pagination a:visited {
+    color: black;
+}
+
+.pagination a:hover {
+    color: white;
+    border-radius: 0.5em;
+    background-color: #5e5d60;
+}
+
+.pagination a.current-page {
+    color: white;
+}
+
+.current-page {
+    border-radius: 0.5em;
+    background-color: black;
 }
