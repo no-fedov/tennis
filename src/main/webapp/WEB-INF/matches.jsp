@@ -1,5 +1,5 @@
 <%@ page    language="java"
-            import="org.tennis.application.dto.MatchDto, org.tennis.adapter.in.web.servlet.MatchServlet, java.util.List"
+            import="org.tennis.application.dto.MatchDto, java.util.List"
             contentType="text/html; charset=UTF-8"
             pageEncoding="UTF-8"
 %>

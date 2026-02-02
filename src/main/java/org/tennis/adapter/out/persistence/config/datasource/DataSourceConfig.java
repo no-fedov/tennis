@@ -2,8 +2,8 @@ package org.tennis.adapter.out.persistence.config.datasource;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceConfiguration;
-import org.tennis.application.entity.MatchEntity;
-import org.tennis.application.entity.PlayerEntity;
+import org.tennis.adapter.out.persistence.entity.MatchEntity;
+import org.tennis.adapter.out.persistence.entity.PlayerEntity;
 
 import static jakarta.persistence.PersistenceConfiguration.JDBC_DRIVER;
 import static jakarta.persistence.PersistenceConfiguration.JDBC_PASSWORD;

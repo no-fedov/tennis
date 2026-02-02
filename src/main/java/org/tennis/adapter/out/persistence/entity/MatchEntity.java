@@ -1,4 +1,4 @@
-package org.tennis.application.entity;
+package org.tennis.adapter.out.persistence.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

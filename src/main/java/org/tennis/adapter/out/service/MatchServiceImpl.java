@@ -1,13 +1,13 @@
 package org.tennis.adapter.out.service;
 
 import lombok.RequiredArgsConstructor;
-import org.tennis.adapter.in.web.servlet.NotFoundException;
+import org.tennis.adapter.out.persistence.entity.MatchEntity;
+import org.tennis.adapter.out.persistence.repository.mapper.MatchMapper;
 import org.tennis.application.dto.MatchDto;
-import org.tennis.application.dto.MatchScoreDto;
-import org.tennis.application.entity.MatchEntity;
-import org.tennis.application.mapper.MatchMapper;
+import org.tennis.application.port.in.service.MatchCompletedCreate;
 import org.tennis.application.port.in.service.MatchService;
 import org.tennis.application.port.out.persistence.MatchRepository;
+import org.tennis.application.service.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class MatchServiceImpl implements MatchService {
     private final MatchMapper matchMapper;
 
     @Override
-    public Long create(MatchScoreDto dto) {
+    public Long create(MatchCompletedCreate dto) {
         MatchEntity match = matchMapper.toEntity(dto);
         matchRepository.save(match);
         return match.getId();

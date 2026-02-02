@@ -1,6 +1,7 @@
 package org.tennis.adapter.in.web.servlet;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.dto.MatchDto;
 import org.tennis.application.port.in.service.MatchService;
+import org.tennis.config.ApplicationContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import static org.tennis.adapter.in.web.servlet.util.PaginationUtil.getPaginatio
 import static org.tennis.adapter.in.web.servlet.util.PaginationUtil.getValidPageNumber;
 
 @WebServlet(name = "matches", urlPatterns = "/matches")
-public class MatchServlet extends HttpServlet {
+public class MatchCatalogServlet extends HttpServlet {
 
     private static final Integer PAGE_SIZE = 5;
     public static final String PLAYER_NAME_QUERY_PARAMETER = "filter_by_player_name";
@@ -31,7 +33,9 @@ public class MatchServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.matchService = (MatchService) getServletContext().getAttribute("matchService");
+        ServletContext servletContext = getServletContext();
+        ApplicationContext context = (ApplicationContext) servletContext.getAttribute("context");
+        matchService = context.getMatchService();
     }
 
     @Override

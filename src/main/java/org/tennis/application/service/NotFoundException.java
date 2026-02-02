@@ -1,4 +1,4 @@
-package org.tennis.adapter.in.web.servlet;
+package org.tennis.application.service;
 
 import lombok.experimental.StandardException;
 

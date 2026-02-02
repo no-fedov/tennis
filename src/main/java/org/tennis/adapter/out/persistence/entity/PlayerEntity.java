@@ -1,4 +1,4 @@
-package org.tennis.application.entity;
+package org.tennis.adapter.out.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

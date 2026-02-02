@@ -7,9 +7,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
-import org.tennis.application.entity.MatchEntity;
-import org.tennis.application.entity.MatchEntity_;
-import org.tennis.application.entity.PlayerEntity_;
+import org.tennis.adapter.out.persistence.entity.MatchEntity;
+import org.tennis.adapter.out.persistence.entity.MatchEntity_;
+import org.tennis.adapter.out.persistence.entity.PlayerEntity_;
 import org.tennis.application.port.out.persistence.MatchRepository;
 
 import java.util.List;

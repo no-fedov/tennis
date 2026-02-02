@@ -3,25 +3,31 @@ package org.tennis.application.service;
 import org.tennis.application.model.OngoingMatch;
 
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class OngoingMatchesService {
 
-    private final Map<String, OngoingMatch> matches = new ConcurrentHashMap<>();
+    private static final String EXCEPTION_MESSAGE_TEMPLATE = "Match with uuid = %s not exists or completed";
 
-    public String add(OngoingMatch match) {
-        String id = UUID.randomUUID().toString();
-        matches.put(id, match);
-        return id;
+    private final Map<UUID, OngoingMatch> matches = new ConcurrentHashMap<>();
+
+    public UUID add(OngoingMatch match) {
+        UUID uuid = UUID.randomUUID();
+        matches.put(uuid, match);
+        return uuid;
     }
 
-    public Optional<OngoingMatch> get(String id) {
-        return Optional.ofNullable(matches.get(id));
+    public OngoingMatch get(UUID uuid) {
+        OngoingMatch match = matches.get(uuid);
+        if (Objects.isNull(match)) {
+            throw new NotFoundException(EXCEPTION_MESSAGE_TEMPLATE.formatted(uuid));
+        }
+        return match;
     }
 
-    public void deleteById(String id) {
-        matches.remove(id);
+    public OngoingMatch delete(UUID uuid) {
+        return matches.remove(uuid);
     }
 }

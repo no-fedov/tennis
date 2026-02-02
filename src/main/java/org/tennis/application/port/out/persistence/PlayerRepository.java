@@ -1,12 +1,18 @@
 package org.tennis.application.port.out.persistence;
 
-import org.tennis.application.entity.PlayerEntity;
+import org.tennis.adapter.out.persistence.entity.PlayerEntity;
+import org.tennis.application.dto.PlayerDto;
+import org.tennis.application.port.in.service.PlayerCreate;
 
 import java.util.Optional;
 
 public interface PlayerRepository {
 
-    void save(PlayerEntity player);
+    PlayerDto save(PlayerCreate player);
 
-    Optional<PlayerEntity> findByName(String name);
+    Optional<PlayerDto> findById(Long id);
+
+    Optional<PlayerDto> findByName(String name);
+
+    Optional<PlayerEntity> findPlayerById(Long id);
 }

@@ -1,6 +1,6 @@
 package org.tennis.application.port.out.persistence;
 
-import org.tennis.application.entity.MatchEntity;
+import org.tennis.adapter.out.persistence.entity.MatchEntity;
 
 import java.util.List;
 import java.util.Optional;

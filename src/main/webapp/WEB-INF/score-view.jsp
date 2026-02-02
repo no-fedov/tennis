@@ -40,9 +40,7 @@
                         %>
                         <%= pointType %>
                     </td>
-                    <% if (!score.isComplete()) { %>
-                        <td></td>
-                    <% } %>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -58,11 +56,9 @@
                         }
                         %>
                     </td>
-                    <% if (!score.isComplete()) { %>
-                        <td>
-                            <button class="button-link" form="point" type="submit" name="point_winner" value="FIRST">POINT</button>
-                        </td>
-                    <% } %>
+                    <td>
+                        <button class="button-link" form="point" type="submit" name="point_winner" value="FIRST">POINT</button>
+                    </td>
                 </tr>
                 <tr>
                     <td><%= score.secondPlayerName() %></td>
@@ -76,18 +72,15 @@
                         }
                         %>
                     </td>
-                    <% if (!score.isComplete()) { %>
-                        <td>
-                            <button class="button-link" form="point" type="submit" name="point_winner" value="SECOND">POINT</button>
-                        </td>
-                    <% } %>
+                    <td>
+                        <button class="button-link" form="point" type="submit" name="point_winner" value="SECOND">POINT</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
-        <% if (!score.isComplete()) { %>
-            <form id="point" action="/match-score?uuid=<%= matchId %>" method="post" style="display:none">
-            </form>
-        <% } %>
+
+        <form id="point" action="/match-score?uuid=<%= matchId %>" method="post" style="display:none">
+        </form>
     </main>
 </body>
 </html>
