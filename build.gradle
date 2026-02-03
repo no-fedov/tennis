@@ -1,16 +1,16 @@
 plugins {
     id 'java'
+    id 'war'
 }
 
 group 'org.nefedov'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
     implementation "com.h2database:h2:${h2Version}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
