@@ -42,7 +42,7 @@ public class Match {
 
     private boolean isLastPoint(Participant pointWinner) {
         return sets.size() >= MIN_SETS_COUNT
-                && sets.stream().filter(set -> set.getWinner() == pointWinner).count() > 1;
+                && sets.stream().filter(set -> set.getWinner() == pointWinner).count() >= MIN_SETS_COUNT;
     }
 }
 
