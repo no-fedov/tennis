@@ -16,7 +16,7 @@ public class PlayerServiceAdapter implements PlayerService {
     @Override
     public Long create(PlayerCreate playerCreateDto) {
         PlayerEntity player = playerMapper.toEntity(playerCreateDto);
-        playerRepository.save(player);
-        return player.getId();
+        PlayerEntity savedPlayer = playerRepository.save(player);
+        return savedPlayer.getId();
     }
 }
