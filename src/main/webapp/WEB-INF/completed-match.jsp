@@ -4,7 +4,7 @@
             pageEncoding="UTF-8"
 %>
 
-<% MatchScoreDto match = (MatchScoreDto) request.getAttribute("match-score"); %>
+<% MatchScoreDto match = (MatchScoreDto) request.getAttribute("match_score"); %>
 
 <!DOCTYPE html>
 <html lang="en">

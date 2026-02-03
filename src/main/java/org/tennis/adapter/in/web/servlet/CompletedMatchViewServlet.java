@@ -21,8 +21,8 @@ public class CompletedMatchViewServlet extends HttpServlet {
         if (matchScore == null) {
             throw new IllegalArgumentException();
         }
-        session.removeAttribute("match-score");
-        req.setAttribute("match-score", matchScore);
+        session.removeAttribute("match_score");
+        req.setAttribute("match_score", matchScore);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/completed-match.jsp");
         requestDispatcher.forward(req, resp);
     }
