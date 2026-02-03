@@ -42,6 +42,7 @@ public class OngoingMatchCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String firstPlayerName = req.getParameter(FIRST_PLAYER_PARAMETER);
         String secondPlayerName = req.getParameter(SECOND_PLAYER_PARAMETER);
+        checkUniqueName(firstPlayerName, secondPlayerName);
         validateNames(firstPlayerName, secondPlayerName);
         UUID uuid = createOngoingMatchUseCase.create(firstPlayerName, secondPlayerName);
         resp.sendRedirect(String.format("/match-score?uuid=%s", uuid));
@@ -57,7 +58,7 @@ public class OngoingMatchCreateServlet extends HttpServlet {
         }
     }
 
-    private void isUniqueName(String firstname, String secondName) {
+    private void checkUniqueName(String firstname, String secondName) {
         if (Objects.equals(firstname, secondName)) {
             throw new IllegalArgumentException("Player can't play himself");
         }
