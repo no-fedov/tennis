@@ -11,6 +11,7 @@ import org.tennis.application.port.in.service.CreateOngoingMatchUseCase;
 import org.tennis.config.ApplicationContext;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +54,12 @@ public class OngoingMatchCreateServlet extends HttpServlet {
             if (!matches) {
                 throw new IllegalArgumentException();
             }
+        }
+    }
+
+    private void isUniqueName(String firstname, String secondName) {
+        if (Objects.equals(firstname, secondName)) {
+            throw new IllegalArgumentException("Player can't play himself");
         }
     }
 }

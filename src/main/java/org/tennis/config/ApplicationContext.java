@@ -47,7 +47,5 @@ public class ApplicationContext {
         MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService(matchScoreCalculator, ongoingMatchesInMemoryStorage);
         this.matchScoreUseCase = matchScoreCalculationService;
         this.matchPlayUseCase = new MatchPlayService(ongoingMatchesInMemoryStorage, matchScoreCalculationService, matchService);
-
-
     }
 }
