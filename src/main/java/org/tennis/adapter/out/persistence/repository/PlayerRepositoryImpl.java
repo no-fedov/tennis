@@ -8,10 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.tennis.adapter.out.persistence.entity.PlayerEntity;
 import org.tennis.adapter.out.persistence.entity.PlayerEntity_;
-import org.tennis.adapter.out.persistence.repository.mapper.PlayerMapper;
-import org.tennis.application.dto.PlayerDto;
-import org.tennis.application.port.in.service.PlayerCreate;
-import org.tennis.application.port.out.persistence.PlayerRepository;
 
 import java.util.Optional;
 
@@ -26,21 +22,20 @@ public class PlayerRepositoryImpl implements PlayerRepository {
             """;
 
     private final EntityManagerFactory entityManagerFactory;
-    private final PlayerMapper playerMapper;
 
     @Override
-    public PlayerDto save(PlayerCreate dto) {
+    public PlayerEntity save(PlayerEntity player) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        PlayerEntity player = playerMapper.toEntity(dto);
+
         try {
             transaction.begin();
             entityManager.persist(player);
             transaction.commit();
-            return playerMapper.toDto(player);
+            return player;
         } catch (ConstraintViolationException e) {
             log.warn(e.getMessage(), e);
-            return findByName(dto.name()).orElseThrow();
+            return findByName(player.getName()).orElseThrow();
         } finally {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -50,26 +45,20 @@ public class PlayerRepositoryImpl implements PlayerRepository {
     }
 
     @Override
-    public Optional<PlayerDto> findById(Long id) {
-        Optional<PlayerEntity> player = findPlayerById(id);
-        return player.map(playerMapper::toDto);
+    public Optional<PlayerEntity> findById(Long id) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            PlayerEntity player = entityManager.find(PlayerEntity.class, id);
+            return Optional.ofNullable(player);
+        }
     }
 
-    public Optional<PlayerDto> findByName(String name) {
+    @Override
+    public Optional<PlayerEntity> findByName(String name) {
         try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
             PlayerEntity player = entityManager
                     .createQuery(FIND_BY_NAME_QUERY, PlayerEntity.class)
                     .setParameter(PlayerEntity_.NAME, name)
                     .getSingleResultOrNull();
-            PlayerDto playerDto = playerMapper.toDto(player);
-            return Optional.ofNullable(playerDto);
-        }
-    }
-
-    @Override
-    public Optional<PlayerEntity> findPlayerById(Long id) {
-        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-            PlayerEntity player = entityManager.find(PlayerEntity.class, id);
             return Optional.ofNullable(player);
         }
     }

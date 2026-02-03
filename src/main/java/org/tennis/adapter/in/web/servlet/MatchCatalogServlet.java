@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.dto.MatchDto;
-import org.tennis.application.port.in.service.MatchService;
+import org.tennis.application.port.out.persistence.MatchService;
 import org.tennis.config.ApplicationContext;
 
 import java.io.IOException;

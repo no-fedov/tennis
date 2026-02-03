@@ -1,10 +1,10 @@
 <%@ page    language="java"
-            import="org.tennis.application.dto.MatchDto"
+            import="org.tennis.application.dto.MatchScoreDto"
             contentType="text/html; charset=UTF-8"
             pageEncoding="UTF-8"
 %>
 
-<% MatchDto match = (MatchDto) request.getAttribute("completed-match"); %>
+<% MatchScoreDto match = (MatchScoreDto) request.getAttribute("match-score"); %>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -8,11 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.tennis.application.dto.MatchScoreDto;
-import org.tennis.application.model.OngoingMatch;
-import org.tennis.application.port.in.service.MatchCompletedCreate;
 import org.tennis.application.port.in.service.MatchPlayUseCase;
 import org.tennis.application.port.in.service.MatchScoreUseCase;
-import org.tennis.application.port.in.service.MatchService;
 import org.tennis.config.ApplicationContext;
 import org.tennis.domain.game.Participant;
 
@@ -26,7 +23,6 @@ public class MatchScoreServlet extends HttpServlet {
 
     private MatchScoreUseCase matchScoreUseCase;
     private MatchPlayUseCase matchPlayUseCase;
-    private MatchService matchService;
 
     @Override
     public void init() {
@@ -34,7 +30,6 @@ public class MatchScoreServlet extends HttpServlet {
         ApplicationContext context = (ApplicationContext) servletContext.getAttribute("context");
         matchScoreUseCase = context.getMatchScoreUseCase();
         matchPlayUseCase = context.getMatchPlayUseCase();
-        matchService = context.getMatchService();
     }
 
     @Override
@@ -52,15 +47,11 @@ public class MatchScoreServlet extends HttpServlet {
         String pointWinner = req.getParameter("point_winner");
         UUID uuid = UUID.fromString(matchUUID);
         Participant pointWinnerParticipant = getParticipant(pointWinner);
-        OngoingMatch ongoingMatch = matchPlayUseCase.play(uuid, pointWinnerParticipant);
-        MatchScoreDto matchScoreDto = matchScoreUseCase.calculate(ongoingMatch);
+        MatchScoreDto matchScoreDto = matchPlayUseCase.play(uuid, pointWinnerParticipant);
         req.setAttribute("match_score", matchScoreDto);
-        if (ongoingMatch.isComplete()) {
-            MatchCompletedCreate completedMatch = new MatchCompletedCreate(ongoingMatch.getFirstPlayerId(),
-                    ongoingMatch.getSecondPlayerId(),
-                    ongoingMatch.getWinnerId());
-            Long idCompletedMatch = matchService.create(completedMatch);
-            resp.sendRedirect(String.format("/matches?id=%s", idCompletedMatch));
+        if (matchScoreDto.isComplete()) {
+            req.getSession().setAttribute("match_score", matchScoreDto);
+            resp.sendRedirect("/completed-match");
             return;
         }
         resp.sendRedirect(String.format("/match-score?uuid=%s", uuid));

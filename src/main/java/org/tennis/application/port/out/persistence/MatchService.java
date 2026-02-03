@@ -1,4 +1,4 @@
-package org.tennis.application.port.in.service;
+package org.tennis.application.port.out.persistence;
 
 import org.tennis.application.dto.MatchDto;
 

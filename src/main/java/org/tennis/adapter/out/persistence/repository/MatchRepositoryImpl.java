@@ -7,26 +7,36 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.tennis.adapter.out.persistence.entity.MatchEntity;
 import org.tennis.adapter.out.persistence.entity.MatchEntity_;
 import org.tennis.adapter.out.persistence.entity.PlayerEntity_;
-import org.tennis.application.port.out.persistence.MatchRepository;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 public class MatchRepositoryImpl implements MatchRepository {
 
     private final EntityManagerFactory emf;
 
     public void save(MatchEntity match) {
-        try (EntityManager entityManager = emf.createEntityManager()) {
-            EntityTransaction transaction = entityManager.getTransaction();
+        EntityManager entityManager = emf.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
             transaction.begin();
             entityManager.persist(match);
             transaction.commit();
+        } catch (ConstraintViolationException e) {
+            log.warn(e.getMessage(), e);
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
         }
     }
 

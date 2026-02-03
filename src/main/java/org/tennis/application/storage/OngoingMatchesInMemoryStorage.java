@@ -1,13 +1,14 @@
-package org.tennis.application.service;
+package org.tennis.application.storage;
 
-import org.tennis.application.model.OngoingMatch;
+import org.tennis.application.service.NotFoundException;
+import org.tennis.domain.OngoingMatch;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class OngoingMatchesService {
+public class OngoingMatchesInMemoryStorage {
 
     private static final String EXCEPTION_MESSAGE_TEMPLATE = "Match with uuid = %s not exists or completed";
 

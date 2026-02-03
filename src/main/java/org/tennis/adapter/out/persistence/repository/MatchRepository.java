@@ -1,4 +1,4 @@
-package org.tennis.application.port.out.persistence;
+package org.tennis.adapter.out.persistence.repository;
 
 import org.tennis.adapter.out.persistence.entity.MatchEntity;
 

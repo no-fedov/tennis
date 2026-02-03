@@ -1,4 +1,4 @@
-package org.tennis.application.port.in.service;
+package org.tennis.application.port.out.persistence;
 
 public record MatchCompletedCreate(Long firstPlayerId, Long secondPlayerId, Long winnerId) {
 
