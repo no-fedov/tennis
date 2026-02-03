@@ -9,7 +9,11 @@ import org.tennis.application.storage.OngoingMatchesInMemoryStorage;
 import org.tennis.domain.OngoingMatch;
 import org.tennis.domain.game.Participant;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @RequiredArgsConstructor
 public class MatchPlayService implements MatchPlayUseCase {
@@ -17,18 +21,26 @@ public class MatchPlayService implements MatchPlayUseCase {
     private final OngoingMatchesInMemoryStorage ongoingMatchesInMemoryStorage;
     private final MatchScoreCalculationService matchScoreCalculationService;
     private final MatchService matchService;
+    private final Map<UUID, Lock> locks = new ConcurrentHashMap<>();
 
     @Override
     public MatchScoreDto play(UUID uuid, Participant pointWinner) {
         OngoingMatch match = ongoingMatchesInMemoryStorage.get(uuid);
-        match.play(pointWinner);
-        if (match.isComplete()) {
-            ongoingMatchesInMemoryStorage.delete(uuid);
-            MatchCompletedCreate completedMatch = new MatchCompletedCreate(match.getFirst().id(),
-                    match.getSecond().id(),
-                    match.getWinner().id());
-            matchService.create(completedMatch);
+        Lock matchLock = locks.computeIfAbsent(uuid, id -> new ReentrantLock());
+        matchLock.lock();
+        try {
+            match.play(pointWinner);
+            if (match.isComplete()) {
+                locks.remove(uuid, matchLock);
+                ongoingMatchesInMemoryStorage.delete(uuid);
+                MatchCompletedCreate completedMatch = new MatchCompletedCreate(match.getFirst().id(),
+                        match.getSecond().id(),
+                        match.getWinner().id());
+                matchService.create(completedMatch);
+            }
+            return matchScoreCalculationService.calculate(match);
+        } finally {
+            matchLock.unlock();
         }
-        return matchScoreCalculationService.calculate(match);
     }
 }
