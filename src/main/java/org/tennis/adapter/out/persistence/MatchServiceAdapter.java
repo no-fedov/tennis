@@ -7,10 +7,8 @@ import org.tennis.adapter.out.persistence.repository.mapper.MatchMapper;
 import org.tennis.application.dto.MatchDto;
 import org.tennis.application.port.out.persistence.MatchCompletedCreate;
 import org.tennis.application.port.out.persistence.MatchService;
-import org.tennis.application.service.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class MatchServiceAdapter implements MatchService {
@@ -19,10 +17,9 @@ public class MatchServiceAdapter implements MatchService {
     private final MatchMapper matchMapper;
 
     @Override
-    public Long create(MatchCompletedCreate dto) {
+    public void create(MatchCompletedCreate dto) {
         MatchEntity match = matchMapper.toEntity(dto);
         matchRepository.save(match);
-        return match.getId();
     }
 
     @Override
