@@ -14,7 +14,6 @@ import org.tennis.config.ApplicationContext;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import static org.tennis.adapter.in.web.servlet.util.PaginationUtil.PAGE_NUMBER_QUERY_PARAMETER;
 import static org.tennis.adapter.in.web.servlet.util.PaginationUtil.PAGINATION_ANCHOR_ATTRIBUTE;
@@ -40,24 +39,6 @@ public class MatchCatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String matchId = req.getParameter("id");
-        if (Objects.nonNull(matchId)) {
-            findById(req, resp);
-            return;
-        }
-        findCompletedMatches(req, resp);
-    }
-
-    private void findById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String matchId = req.getParameter("id");
-        Long id = Long.parseLong(matchId);
-        MatchDto completedMatch = matchService.findById(id);
-        req.setAttribute("completed-match", completedMatch);
-        forwardToCompletedMatch(req, resp);
-    }
-
-    private void findCompletedMatches(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
         String pageNumber = req.getParameter(PAGE_NUMBER_QUERY_PARAMETER);
         String playerName = req.getParameter(PLAYER_NAME_QUERY_PARAMETER);
         Long matchesCount = matchService.countComplete(playerName);
@@ -75,12 +56,6 @@ public class MatchCatalogServlet extends HttpServlet {
     private void forwardToCompletedMatches(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/matches.jsp");
-        requestDispatcher.forward(req, resp);
-    }
-
-    private void forwardToCompletedMatch(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/completed-match.jsp");
         requestDispatcher.forward(req, resp);
     }
 }

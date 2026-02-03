@@ -26,13 +26,6 @@ public class MatchServiceAdapter implements MatchService {
     }
 
     @Override
-    public MatchDto findById(Long id) {
-        Optional<MatchEntity> match = matchRepository.findById(id);
-        MatchEntity completedMatch = match.orElseThrow(() -> new NotFoundException(String.format("Match with id = %s not found", id)));
-        return matchMapper.toDto(completedMatch);
-    }
-
-    @Override
     public List<MatchDto> findComplete(Integer pageSize, Integer pageNumber, String playerName) {
         List<MatchEntity> complete = matchRepository.findComplete(pageSize, pageNumber, playerName);
         return matchMapper.toDtos(complete);
