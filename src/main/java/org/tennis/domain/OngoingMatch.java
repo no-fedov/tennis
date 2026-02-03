@@ -17,7 +17,7 @@ public class OngoingMatch {
         this.match = new Match();
     }
 
-    public synchronized void play(Participant pointWinner) {
+    public void play(Participant pointWinner) {
         this.match.play(pointWinner);
     }
 
