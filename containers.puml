@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+    Person(person, "Пользователь", "Взаимодействует с системой")
+
+    Container_Boundary(system, "Cloud Server на Linux") {
+        Container(tennis, "TennisScoreboard", "Java 24, Lombok,\nJakarta Servlet API,\nJakarta Persistence API", "Сохраняет игроков\nи завершенные матчи.\nПозволяет вести счет незавершенного матча \nи просматривать списки отыгранных матчей.")
+        Container(hikari, "Hikari CP", "Java", "Хранит пул соединений\nс базой данных")
+        ContainerDb(h2, "H2", "Java", "In-memory база данных")
+        Container(tomcat, "Apache Tomcat 11", "Java", "Веб-сервер и контейнер сервлетов")
+        Container(hibernate, "Hibernate", "Java", "ORM фреймворк,\nстроит SQL‑запросы")
+    }
+
+    Rel(hikari, h2, "write", "SQL")
+    Rel(hikari, h2, "read", "SQL")
+    Rel(tomcat, tennis, "Передает объектное представление запроса HTTP", "Java")
+    Rel(tennis, tomcat, "Динамических формирует веб‑страницу для ответа", "Java, JSP, HTML, CSS")
+    Rel(tennis, hibernate, "Передает объектную модель Java для сохранения в БД", "Java, JPA")
+    Rel(hibernate, tennis, "Передает ответ от реляционной БД в виде Java объекта", "Java, JPA")
+    Rel(person, tomcat, "Запросы через браузер", "HTTP/1.1")
+    Rel(tomcat, person, "Возвращает ответы", "HTTP/1.1")
+    Rel(tennis, tomcat, "Развёрнуто и функционирует в контейнере сервлетов Apache Tomcat", "Jakarta Servlet API")
+    Rel(hibernate, hikari, "Передача запроса в SQL формате", "Java")
+    Rel(hikari, hibernate, "Ответ от базы данных", "Java")
+    Lay_R(hibernate, tennis)
+    Lay_U(tennis, hibernate)
+
+@enduml
