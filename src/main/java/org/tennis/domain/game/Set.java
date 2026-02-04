@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static org.tennis.domain.game.Participant.FIRST;
 import static org.tennis.domain.game.Participant.SECOND;
-import static org.tennis.domain.util.MatchProgressChecker.isFinish;
+import static org.tennis.domain.util.MatchProgressChecker.isFinished;
 
 @Getter
 public class Set {
@@ -71,7 +71,7 @@ public class Set {
                 .collect(groupingBy(Game::getWinner, counting()));
         int firstScore = scores.getOrDefault(FIRST, (long) ZERO_WIN_GAME).intValue();
         int secondScore = scores.getOrDefault(SECOND, (long) ZERO_WIN_GAME).intValue();
-        return isFinish(firstScore, secondScore, GAME_COUNT_FOR_WIN, GAP_BY_GAME_FOR_WIN);
+        return isFinished(firstScore, secondScore, GAME_COUNT_FOR_WIN, GAP_BY_GAME_FOR_WIN);
     }
 
     private void pointTieBreak(Participant winner) {

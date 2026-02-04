@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.tennis.domain.game.Participant.FIRST;
-import static org.tennis.domain.util.MatchProgressChecker.isFinish;
+import static org.tennis.domain.util.MatchProgressChecker.isFinished;
 
 @Getter
 public class TieBreak {
@@ -44,7 +44,7 @@ public class TieBreak {
     }
 
     private boolean isLastPoint(TieBreakPoint point) {
-        return isFinish(point.firstScore, point.secondScore, SCORE_FOR_WIN, POINTS_GAP_FOR_WIN);
+        return isFinished(point.firstScore, point.secondScore, SCORE_FOR_WIN, POINTS_GAP_FOR_WIN);
     }
 
     public record TieBreakPoint(int firstScore, int secondScore) {

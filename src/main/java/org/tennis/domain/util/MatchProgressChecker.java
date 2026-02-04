@@ -2,12 +2,9 @@ package org.tennis.domain.util;
 
 public class MatchProgressChecker {
 
-    public static boolean isFinish(int firstScore, int secondScore, int scoreForWin, int gapScoreForWin) {
-        return playerFinishProgress(firstScore, secondScore, scoreForWin, gapScoreForWin)
-                || playerFinishProgress(secondScore, firstScore, scoreForWin, gapScoreForWin);
-    }
-
-    private static boolean playerFinishProgress(int firstScore, int secondScore, int scoreForWin, int gapScoreForWin) {
-        return firstScore >= scoreForWin && firstScore - secondScore >= gapScoreForWin;
+    public static boolean isFinished(int firstScore, int secondScore, int scoreForWin, int gapScoreForWin) {
+        int max = Math.max(firstScore, secondScore);
+        int min = Math.min(firstScore, secondScore);
+        return max >= scoreForWin && (max - min) >= gapScoreForWin;
     }
 }
