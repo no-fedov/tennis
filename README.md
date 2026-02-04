@@ -1,5 +1,5 @@
 # Проект “Табло теннисного матча”  
-Онлайн-система учёта теннисных матчей: живое табло, история игр, поиск по победителю.
+Онлайн-система учёта теннисных матчей: live-табло, история игр, поиск по победителю.
 
 Выполнен в рамках замечательного, удивительного, amazing [Java роадмапа Сергея Жукова](https://zhukovsd.github.io/java-backend-learning-course/)
 
@@ -10,7 +10,7 @@
 ------------
 
 >Java 24, Lombok, JUnit, Apache Tomcat 11, Jakarta Servlet API,  
-Jakarta Persitence API, Hibernate ORM, Hickari CP, H2, SQL, Gradle.
+Jakarta Persistence API, Hibernate ORM, HickariCP, H2, SQL, Gradle.
 
 ## Как локально запустить проект?
 
@@ -18,7 +18,7 @@ Jakarta Persitence API, Hibernate ORM, Hickari CP, H2, SQL, Gradle.
 
 1. Скачать Apache Tomcat для вашей ОС
 
-2. В дирреткории `"корень_tomcat"/webapps` удалить содержимое
+2. В директории `"корень_tomcat"/webapps` удалить содержимое
 (через GUI или в командной строке)
 
 3. Скачать проект с гитхаба, в корневой папке проекта выполнить команду
@@ -33,7 +33,7 @@ Jakarta Persitence API, Hibernate ORM, Hickari CP, H2, SQL, Gradle.
 
 5. Поместить содержимое архива `tennis-1.0.war` в `"корень_tomcat"/webapps/ROOT`
 
-6. В дирректори `"корень_tomcat"/bin` запустить на исполнение  
+6. В директори `"корень_tomcat"/bin` запустить  
 
     `startup.bat` - Windows
 
