@@ -4,6 +4,8 @@ import lombok.Getter;
 import org.tennis.domain.game.Match;
 import org.tennis.domain.game.Participant;
 
+import java.util.Objects;
+
 @Getter
 public class OngoingMatch {
 
@@ -25,8 +27,12 @@ public class OngoingMatch {
         return match.isComplete();
     }
 
-    public Player getWinner() {
-        return switch (match.getWinner()) {
+    public Player winner() {
+        Participant winner = match.getWinner();
+        if (Objects.isNull(winner)) {
+            throw new MatchNotCompleteException();
+        }
+        return switch (winner) {
             case FIRST -> first;
             case SECOND -> second;
         };

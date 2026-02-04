@@ -35,7 +35,7 @@ public class MatchPlayService implements MatchPlayUseCase {
                 ongoingMatchesInMemoryStorage.delete(uuid);
                 MatchCompletedCreate completedMatch = new MatchCompletedCreate(match.getFirst().id(),
                         match.getSecond().id(),
-                        match.getWinner().id());
+                        match.winner().id());
                 matchService.create(completedMatch);
             }
             return matchScoreCalculationService.calculate(match);
