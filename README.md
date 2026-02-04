@@ -1,4 +1,5 @@
 # Проект “Табло теннисного матча”  
+
 Онлайн-система учёта теннисных матчей: live-табло, история игр, поиск по победителю.
 
 Выполнен в рамках замечательного, удивительного, amazing [Java роадмапа Сергея Жукова](https://zhukovsd.github.io/java-backend-learning-course/)
@@ -7,14 +8,10 @@
 
 ## Используемые технологии
 
-------------
-
 >Java 24, Lombok, JUnit, Apache Tomcat 11, Jakarta Servlet API,  
 Jakarta Persistence API, Hibernate ORM, HickariCP, H2, SQL, Gradle.
 
 ## Как локально запустить проект?
-
-------------
 
 1. Скачать Apache Tomcat для вашей ОС
 
@@ -43,13 +40,9 @@ Jakarta Persistence API, Hibernate ORM, HickariCP, H2, SQL, Gradle.
 
 ## Прочее
 
-------------
-
 Проект написан в стиле DDD (Domain‑Driven Design) с использованием [гексагональной архитектуры](https://github.com/thombergs/buckpal).
 
 ### Чем пользовался при написании проекта
-
-------------
 
 Основы HTML, CSS:
  - [Итерактивная платформа для изучения CSS, HTML](https://www.freecodecamp.org/)
